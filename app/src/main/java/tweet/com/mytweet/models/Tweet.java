@@ -16,6 +16,7 @@ public class Tweet {
     {
         id = unsignedLong();
         date = new Date().getTime();
+        tweetMessage = "";
     }
 
     /**
