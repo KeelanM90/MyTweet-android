@@ -10,4 +10,14 @@
     <string name="welcomeSignup">Sign up</string>
     <string name="welcomeHeading">Welcome to\nMyTweet</string>
     <string name="welcomeMsg">See what\&#39;s happening in the great WIT world right now</string>
+    <string name="signupFirstName">First Name</string>
+    <string name="signupLastName">Last Name</string>
+    <string name="signupEmail">Email</string>
+    <string name="signupPassword">Password</string>
+    <string name="signupButton">Sign Up to MyTweet</string>
+    <string name="loginTitle">Enter your email and password</string>
+    <string name="loginSubtitle">You must be registered</string>
+    <string name="loginEmail">Email</string>
+    <string name="loginPassword">Password</string>
+    <string name="loginSignIn">Apply</string>
 </resources>

@@ -13,14 +13,14 @@
         <activity android:name=".activities.Welcome">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".activities.TweetActivity">
-        </activity>
-        <activity android:name=".activities.TimelineActivity">
-        </activity>
+        <activity android:name=".activities.TweetActivity" />
+        <activity android:name=".activities.TimelineActivity" />
+        <activity android:name=".activities.Signup" />
+        <activity android:name=".activities.Login"></activity>
     </application>
 
 </manifest>
