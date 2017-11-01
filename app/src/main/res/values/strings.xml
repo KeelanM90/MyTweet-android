@@ -6,4 +6,8 @@
     <string name="email_button">Email Tweet Via</string>
     <string name="new_tweet">New Tweet</string>
     <string name="settings">Settings</string>
+    <string name="welcomeLogin">Login</string>
+    <string name="welcomeSignup">Sign up</string>
+    <string name="welcomeHeading">Welcome to\nMyTweet</string>
+    <string name="welcomeMsg">See what\&#39;s happening in the great WIT world right now</string>
 </resources>
