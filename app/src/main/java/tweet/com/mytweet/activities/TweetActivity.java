@@ -6,10 +6,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import tweet.com.mytweet.R;
-import tweet.com.mytweet.Tweet;
+import tweet.com.mytweet.models.Tweet;
 
 public class TweetActivity extends AppCompatActivity implements TextWatcher {
 
@@ -22,10 +21,14 @@ public class TweetActivity extends AppCompatActivity implements TextWatcher {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tweet);
 
+        tweet = new Tweet();
+
         tweetBody = (EditText) findViewById(R.id.tweetBody);
         textCounter = (TextView) findViewById(R.id.charCount);
         tweetBody.addTextChangedListener(this);
+        TextView date = (TextView) findViewById(R.id.dateText);
 
+        date.setText(tweet.getDateString());
     }
 
     @Override
@@ -41,5 +44,6 @@ public class TweetActivity extends AppCompatActivity implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable editable) {
+        tweet.setTweetMessage(editable.toString());
     }
 }

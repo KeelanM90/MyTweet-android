@@ -1,4 +1,4 @@
-package tweet.com.mytweet;
+package tweet.com.mytweet.models;
 
 import java.util.Date;
 import java.util.Random;
@@ -19,6 +19,7 @@ public class Tweet {
     }
 
     /**
+     * Src: Android labs - https://wit-ictskills-2017.github.io/mobile-app-dev/topic03-a/book-c-myrent-01%20(Widgets)/index.html#/05
      * Generate a long greater than zero
      * @return Unsigned Long value greater than zero
      */
