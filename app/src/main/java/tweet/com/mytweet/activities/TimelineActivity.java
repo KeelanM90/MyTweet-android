@@ -56,7 +56,6 @@ public class TimelineActivity extends AppCompatActivity implements AdapterView.O
     {
         Tweet tweet = adapter.getItem(position);
         startActivityWithData(this, TweetActivity.class, "TWEET_ID", tweet.id);
-        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -75,14 +74,18 @@ public class TimelineActivity extends AppCompatActivity implements AdapterView.O
             case R.id.menu_item_new_tweet: Tweet tweet = new Tweet();
                 timeline.addTweet(tweet);
                 startActivityWithDataForResult(this, TweetActivity.class, "TWEET_ID", tweet.id, 0);
-                adapter.notifyDataSetChanged();
                 return true;
 
             default: return super.onOptionsItemSelected(item);
         }
     }
-}
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
+}
 
 class TimelineAdapter extends ArrayAdapter<Tweet>
 {

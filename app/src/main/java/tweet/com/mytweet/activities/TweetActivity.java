@@ -67,4 +67,11 @@ public class TweetActivity extends AppCompatActivity implements TextWatcher {
     public void afterTextChanged(Editable editable) {
         tweet.setTweetMessage(editable.toString());
     }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        timeline.saveTweets();
+    }
 }

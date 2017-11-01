@@ -9,11 +9,19 @@ import java.util.ArrayList;
  */
 
 public class Timeline {
+    private TweetSerializer tweetSerializer;
     public ArrayList<Tweet> tweets;
 
-    public Timeline() {
-        tweets = new ArrayList<Tweet>();
-        this.generateTestData();
+    public Timeline(TweetSerializer tweetSerializer) {
+
+        this.tweetSerializer = tweetSerializer;
+        try
+        {
+            tweets = tweetSerializer.loadTweets();
+        }
+        catch (Exception e) {
+            tweets = new ArrayList<>();
+        }
     }
 
     public void addTweet(Tweet tweet) {
@@ -31,11 +39,16 @@ public class Timeline {
         return null;
     }
 
-    private void generateTestData() {
-        for (int i = 0; i < 100; i += 1) {
-            Tweet tweet = new Tweet();
-            tweet.setTweetMessage("Tweet" + i);;
-            tweets.add(tweet);
+    public boolean saveTweets()
+    {
+        try
+        {
+            tweetSerializer.saveTweets(tweets);
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
         }
     }
 }
