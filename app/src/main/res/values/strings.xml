@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">MyTweet</string>
+    <string name="tweet_button">Tweet</string>
+    <string name="tweet_hint">What\&#39;s on your mind?</string>
+    <string name="contact_button">Select Contact</string>
+    <string name="email_button">Email Tweet Via</string>
 </resources>
