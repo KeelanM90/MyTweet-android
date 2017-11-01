@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 
 import tweet.com.mytweet.R;
+import tweet.com.mytweet.app.MyTweetApp;
+import tweet.com.mytweet.models.User;
 
 public class Signup extends AppCompatActivity {
 
@@ -17,6 +20,16 @@ public class Signup extends AppCompatActivity {
 
     public void signupPressed (View view)
     {
-        startActivity (new Intent(this, TimelineActivity.class));
+        EditText firstName = (EditText)  findViewById(R.id.firstName);
+        EditText lastName  = (EditText)  findViewById(R.id.lastName);
+        EditText email     = (EditText)  findViewById(R.id.Email);
+        EditText password  = (EditText)  findViewById(R.id.Password);
+
+        User user = new User(firstName.getText().toString(), lastName.getText().toString(), email.getText().toString(), password.getText().toString());
+
+        MyTweetApp app = (MyTweetApp) getApplication();
+        app.userStore.addUser(user);
+
+        startActivity (new Intent(this, Welcome.class));
     }
 }

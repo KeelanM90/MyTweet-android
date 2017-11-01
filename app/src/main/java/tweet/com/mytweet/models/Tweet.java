@@ -15,8 +15,8 @@ public class Tweet {
     public Long date;
     private String tweetMessage;
 
-    private static final String JSON_ID             = "id"            ;
-    private static final String JSON_TWEET_MESSAGE    = "tweetmessage"   ;
+    private static final String JSON_ID  = "id";
+    private static final String JSON_TWEET_MESSAGE   = "tweetmessage";
     private static final String JSON_DATE  = "date";
 
     public Tweet()
@@ -28,17 +28,17 @@ public class Tweet {
 
     public Tweet(JSONObject json) throws JSONException
     {
-        id            = json.getLong(JSON_ID);
-        tweetMessage   = json.getString(JSON_TWEET_MESSAGE);
-        date          = json.getLong(JSON_DATE);
+        id  = json.getLong(JSON_ID);
+        tweetMessage  = json.getString(JSON_TWEET_MESSAGE);
+        date = json.getLong(JSON_DATE);
     }
 
     public JSONObject toJSON() throws JSONException
     {
         JSONObject json = new JSONObject();
-        json.put(JSON_ID            , Long.toString(id));
-        json.put(JSON_TWEET_MESSAGE   , tweetMessage);
-        json.put(JSON_DATE          , date);
+        json.put(JSON_ID  , Long.toString(id));
+        json.put(JSON_TWEET_MESSAGE  , tweetMessage);
+        json.put(JSON_DATE  , date);
         return json;
     }
 
