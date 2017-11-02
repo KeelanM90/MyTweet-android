@@ -26,6 +26,7 @@ public class Timeline {
 
     public void addTweet(Tweet tweet) {
         tweets.add(tweet);
+        this.saveTweets();
     }
 
     public Tweet getTweet(Long id) {

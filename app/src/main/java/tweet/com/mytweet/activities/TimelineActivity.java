@@ -72,7 +72,8 @@ public class TimelineActivity extends AppCompatActivity implements AdapterView.O
     {
         switch (item.getItemId())
         {
-            case R.id.menu_item_new_tweet: Tweet tweet = new Tweet(app.loggedInUser.id);
+            case R.id.menu_item_new_tweet:
+                Tweet tweet = new Tweet(app.loggedInUser.id);
                 timeline.addTweet(tweet);
                 startActivityWithDataForResult(this, TweetActivity.class, "TWEET_ID", tweet.id, 0);
                 return true;

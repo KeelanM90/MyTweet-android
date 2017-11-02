@@ -1,10 +1,14 @@
 package tweet.com.mytweet.models;
 
+import android.content.Context;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Date;
 import java.util.Random;
+
+import tweet.com.mytweet.app.MyTweetApp;
 
 /**
  * Created by keela on 01/11/2017.
@@ -26,6 +30,7 @@ public class Tweet {
         id = unsignedLong();
         date = new Date().getTime();
         tweetMessage = "";
+        this.userId = userId;
     }
 
     public Tweet(JSONObject json) throws JSONException
@@ -42,7 +47,7 @@ public class Tweet {
         json.put(JSON_ID  , Long.toString(id));
         json.put(JSON_TWEET_MESSAGE  , tweetMessage);
         json.put(JSON_DATE  , date);
-        json.put(JSON_USER_ID  , date);
+        json.put(JSON_USER_ID  , userId);
         return json;
     }
 
@@ -80,5 +85,10 @@ public class Tweet {
     private String dateString() {
         String dateFormat = "EEE d MMM yyyy H:mm";
         return android.text.format.DateFormat.format(dateFormat, date).toString();
+    }
+
+    public String getEmailableTweet() {
+        String tweetString = "Tweet: " + tweetMessage + " Date: " + dateString();
+        return tweetString;
     }
 }
