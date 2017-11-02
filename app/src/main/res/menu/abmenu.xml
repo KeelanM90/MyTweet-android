@@ -9,11 +9,17 @@
         android:title="@string/new_tweet"
         app:showAsAction="ifRoom|withText"/>
 
-
     <item
         android:id="@+id/action_settings"
         android:icon="@android:drawable/ic_menu_preferences"
         android:title="@string/settings"
-        app:showAsAction="ifRoom|withText"/>
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_clear"
+        android:icon="@android:drawable/ic_delete"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:title="@string/clear"/>
 
 </menu>

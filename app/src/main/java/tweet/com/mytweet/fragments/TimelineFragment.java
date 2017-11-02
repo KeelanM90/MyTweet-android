@@ -93,6 +93,13 @@ public class TimelineFragment extends ListFragment implements OnItemClickListene
                 i.putExtra(TweetFragment.EXTRA_TWEET_ID, tweet.id);
                 startActivityForResult(i, 0);
                 return true;
+            case R.id.action_clear:
+
+                for (int j  = tweets.size()  - 1; j >= 0; j--) {
+                    timeline.deleteTweet(tweets.get(j));
+                    adapter.notifyDataSetChanged();
+                }
+                return true;
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -135,7 +142,6 @@ public class TimelineFragment extends ListFragment implements OnItemClickListene
             default:
                 return false;
         }
-
     }
 
     private void deleteTweet(ActionMode actionMode)

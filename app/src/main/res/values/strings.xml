@@ -21,4 +21,5 @@
     <string name="loginPassword">Password</string>
     <string name="loginSignIn">Apply</string>
     <string name="delete_tweet">Delete Tweet</string>
+    <string name="clear">Clear</string>
 </resources>
