@@ -14,12 +14,14 @@ public class Tweet {
     public Long id;
     public Long date;
     private String tweetMessage;
+    private Long userId;
 
     private static final String JSON_ID  = "id";
     private static final String JSON_TWEET_MESSAGE   = "tweetmessage";
     private static final String JSON_DATE  = "date";
+    private static final String JSON_USER_ID  = "userid";
 
-    public Tweet()
+    public Tweet(Long userId)
     {
         id = unsignedLong();
         date = new Date().getTime();
@@ -31,6 +33,7 @@ public class Tweet {
         id  = json.getLong(JSON_ID);
         tweetMessage  = json.getString(JSON_TWEET_MESSAGE);
         date = json.getLong(JSON_DATE);
+        userId = json.getLong(JSON_USER_ID);
     }
 
     public JSONObject toJSON() throws JSONException
@@ -39,6 +42,7 @@ public class Tweet {
         json.put(JSON_ID  , Long.toString(id));
         json.put(JSON_TWEET_MESSAGE  , tweetMessage);
         json.put(JSON_DATE  , date);
+        json.put(JSON_USER_ID  , date);
         return json;
     }
 
@@ -67,6 +71,10 @@ public class Tweet {
 
     public String getDateString() {
         return dateString();
+    }
+
+    public Long getUserId() {
+        return userId;
     }
 
     private String dateString() {

@@ -25,7 +25,11 @@ public class TweetActivity extends AppCompatActivity implements TextWatcher {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tweet);
 
-        tweet = new Tweet();
+        MyTweetApp app = (MyTweetApp) getApplication();
+        timeline = app.timeline;
+
+        Long tweetId = (Long) getIntent().getExtras().getSerializable("TWEET_ID");
+        tweet = timeline.getTweet(tweetId);
 
         tweetBody = (EditText) findViewById(R.id.tweetBody);
         textCounter = (TextView) findViewById(R.id.charCount);
@@ -33,12 +37,6 @@ public class TweetActivity extends AppCompatActivity implements TextWatcher {
         date = (TextView) findViewById(R.id.dateText);
 
         date.setText(tweet.getDateString());
-
-        MyTweetApp app = (MyTweetApp) getApplication();
-        timeline = app.timeline;
-
-        Long tweetId = (Long) getIntent().getExtras().getSerializable("TWEET_ID");
-        tweet = timeline.getTweet(tweetId);
 
         if (tweet != null)
         {

@@ -11,6 +11,8 @@ import android.widget.Toast;
 import tweet.com.mytweet.R;
 import tweet.com.mytweet.app.MyTweetApp;
 import tweet.com.mytweet.models.Timeline;
+import tweet.com.mytweet.models.TweetSerializer;
+import tweet.com.mytweet.models.UserStore;
 
 public class Login extends AppCompatActivity {
 
@@ -27,8 +29,10 @@ public class Login extends AppCompatActivity {
         EditText email     = (EditText)  findViewById(R.id.email);
         EditText password  = (EditText)  findViewById(R.id.password);
 
-        if (app.validUser(email.getText().toString(), password.getText().toString()))
+        String emailAddress = email.getText().toString();
+        if (app.validUser(emailAddress, password.getText().toString()))
         {
+            app.setLoggedInUser(emailAddress);
             startActivity (new Intent(this, TimelineActivity.class));
         }
         else

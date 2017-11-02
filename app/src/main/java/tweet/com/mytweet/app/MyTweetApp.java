@@ -21,6 +21,7 @@ public class MyTweetApp extends Application
     public UserStore userStore;
     private static final String TWEETS_FILENAME = "tweets.json";
     private static final String USERS_FILENAME = "users.json";
+    public User loggedInUser;
     @Override
     public void onCreate()
     {
@@ -40,5 +41,9 @@ public class MyTweetApp extends Application
             }
         }
         return false;
+    }
+
+    public void setLoggedInUser(String email) {
+        loggedInUser = userStore.getUserByEmail(email);
     }
 }

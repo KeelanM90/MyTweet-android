@@ -34,6 +34,7 @@ public class TimelineActivity extends AppCompatActivity implements AdapterView.O
     private ListView listView;
     private Timeline timeline;
     private TimelineAdapter adapter;
+    private MyTweetApp app;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -43,7 +44,7 @@ public class TimelineActivity extends AppCompatActivity implements AdapterView.O
         setContentView(R.layout.timeline);
 
         listView = (ListView) findViewById(R.id.timelineList);
-        MyTweetApp app = (MyTweetApp) getApplication();
+        app = (MyTweetApp) getApplication();
         timeline = app.timeline;
 
         adapter = new TimelineAdapter(this, timeline.tweets);
@@ -71,7 +72,7 @@ public class TimelineActivity extends AppCompatActivity implements AdapterView.O
     {
         switch (item.getItemId())
         {
-            case R.id.menu_item_new_tweet: Tweet tweet = new Tweet();
+            case R.id.menu_item_new_tweet: Tweet tweet = new Tweet(app.loggedInUser.id);
                 timeline.addTweet(tweet);
                 startActivityWithDataForResult(this, TweetActivity.class, "TWEET_ID", tweet.id, 0);
                 return true;

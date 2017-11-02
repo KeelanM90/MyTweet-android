@@ -26,6 +26,7 @@ public class UserStore {
 
     public void addUser(User user) {
         users.add(user);
+        this.saveUsers();
     }
 
     public User getUser(Long id) {
