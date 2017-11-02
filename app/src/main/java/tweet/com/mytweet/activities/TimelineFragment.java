@@ -3,15 +3,15 @@ package tweet.com.mytweet.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
-import android.support.v7.app.AppCompatActivity;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -26,18 +26,17 @@ import tweet.com.mytweet.helpers.IntentHelper;
 import tweet.com.mytweet.models.Timeline;
 import tweet.com.mytweet.models.Tweet;
 
-import static tweet.com.mytweet.helpers.IntentHelper.startActivityWithData;
-import static tweet.com.mytweet.helpers.IntentHelper.startActivityWithDataForResult;
 
 /**
  * Created by keela on 02/11/2017.
  */
 
-public class TimelineFragment extends ListFragment implements OnItemClickListener {
+public class TimelineFragment extends ListFragment implements OnItemClickListener,  AbsListView.MultiChoiceModeListener {
     private ArrayList<Tweet> tweets;
     private Timeline timeline;
     private TimelineAdapter adapter;
     private MyTweetApp app;
+    private ListView listView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,6 +56,7 @@ public class TimelineFragment extends ListFragment implements OnItemClickListene
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View v = super.onCreateView(inflater, parent, savedInstanceState);
+        listView = (ListView) v.findViewById(android.R.id.list);
         return v;
     }
 
@@ -66,6 +66,8 @@ public class TimelineFragment extends ListFragment implements OnItemClickListene
         Intent i = new Intent(getActivity(), TweetActivity.class);
         i.putExtra(TweetFragment.EXTRA_TWEET_ID, tweet.id);
         startActivityForResult(i, 0);
+        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+        listView.setMultiChoiceModeListener(this);
     }
 
     @Override
@@ -102,6 +104,57 @@ public class TimelineFragment extends ListFragment implements OnItemClickListene
         adapter.notifyDataSetChanged();
     }
 
+    /* ************ MultiChoiceModeListener methods (begin) *********** */
+    @Override
+    public boolean onCreateActionMode(ActionMode actionMode, Menu menu)
+    {
+        MenuInflater inflater = actionMode.getMenuInflater();
+        inflater.inflate(R.menu.timeline_context, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareActionMode(ActionMode actionMode, Menu menu)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem)
+    {
+        switch (menuItem.getItemId())
+        {
+            case R.id.menu_item_delete_tweet:
+                deleteTweet(actionMode);
+                return true;
+            default:
+                return false;
+        }
+
+    }
+
+    private void deleteTweet(ActionMode actionMode)
+    {
+        for (int i = adapter.getCount() - 1; i >= 0; i--)
+        {
+            if (listView.isItemChecked(i))
+            {
+                timeline.deleteTweet(adapter.getItem(i));
+            }
+        }
+        actionMode.finish();
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onDestroyActionMode(ActionMode actionMode)
+    {
+    }
+
+    @Override
+    public void onItemCheckedStateChanged(ActionMode actionMode, int position, long id, boolean checked)
+    {
+    }
 }
 
 class TimelineAdapter extends ArrayAdapter<Tweet> {

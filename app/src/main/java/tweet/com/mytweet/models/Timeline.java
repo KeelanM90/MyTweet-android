@@ -29,6 +29,12 @@ public class Timeline {
         this.saveTweets();
     }
 
+    public void deleteTweet(Tweet tweet)
+    {
+        tweets.remove(tweet);
+        saveTweets();
+    }
+
     public Tweet getTweet(Long id) {
         for (Tweet tweet : tweets) {
             if (id.equals(tweet.id)) {

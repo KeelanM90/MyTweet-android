@@ -20,4 +20,5 @@
     <string name="loginEmail">Email</string>
     <string name="loginPassword">Password</string>
     <string name="loginSignIn">Apply</string>
+    <string name="delete_tweet">Delete Tweet</string>
 </resources>
