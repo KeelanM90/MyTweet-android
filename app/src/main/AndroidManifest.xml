@@ -17,7 +17,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.TweetActivity" />
+        <activity android:name=".activities.TweetActivity" >
+           <meta-data android:name="android.support.PARENT_ACTIVITY"
+             android:value=".activities.TimelineActivity"/>
+        </activity>
         <activity android:name=".activities.TimelineActivity" />
         <activity android:name=".activities.Signup" />
         <activity android:name=".activities.Login"></activity>

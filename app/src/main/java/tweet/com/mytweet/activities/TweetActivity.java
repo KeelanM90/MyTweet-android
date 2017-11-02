@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -11,6 +12,8 @@ import tweet.com.mytweet.R;
 import tweet.com.mytweet.app.MyTweetApp;
 import tweet.com.mytweet.models.Timeline;
 import tweet.com.mytweet.models.Tweet;
+
+import static tweet.com.mytweet.helpers.IntentHelper.navigateUp;
 
 public class TweetActivity extends AppCompatActivity implements TextWatcher {
 
@@ -24,6 +27,7 @@ public class TweetActivity extends AppCompatActivity implements TextWatcher {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tweet);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         MyTweetApp app = (MyTweetApp) getApplication();
         timeline = app.timeline;
@@ -71,5 +75,16 @@ public class TweetActivity extends AppCompatActivity implements TextWatcher {
     {
         super.onPause();
         timeline.saveTweets();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:  navigateUp(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
