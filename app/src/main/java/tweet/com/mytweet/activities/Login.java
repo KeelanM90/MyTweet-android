@@ -24,7 +24,7 @@ public class Login extends AppCompatActivity {
 
     public void loginPressed (View view)
     {
-        MyTweetApp app = (MyTweetApp) getApplication();
+        MyTweetApp app = MyTweetApp.getApp();;
 
         EditText email     = (EditText)  findViewById(R.id.email);
         EditText password  = (EditText)  findViewById(R.id.password);

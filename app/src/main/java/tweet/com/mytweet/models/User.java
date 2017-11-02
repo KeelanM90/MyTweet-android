@@ -11,10 +11,10 @@ import java.util.Random;
 
 public class User {
     public Long id;
-    public String firstName;
-    public String lastName;
-    public String email;
-    public String password;
+    public String firstName = "";
+    public String lastName = "";
+    public String email = "";
+    public String password = "";
 
     private static final String JSON_ID  = "id";
     private static final String JSON_FIRST_NAME   = "firstname";

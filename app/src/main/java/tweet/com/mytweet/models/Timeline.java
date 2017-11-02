@@ -30,8 +30,6 @@ public class Timeline {
     }
 
     public Tweet getTweet(Long id) {
-        Log.i(this.getClass().getSimpleName(), "Long parameter id: " + id);
-
         for (Tweet tweet : tweets) {
             if (id.equals(tweet.id)) {
                 return tweet;
