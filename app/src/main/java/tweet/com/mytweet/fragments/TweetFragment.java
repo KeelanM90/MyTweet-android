@@ -1,4 +1,4 @@
-package tweet.com.mytweet.activities;
+package tweet.com.mytweet.fragments;
 
 /**
  * Created by keela on 02/11/2017.
@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import tweet.com.mytweet.R;
+import tweet.com.mytweet.activities.TweetActivity;
 import tweet.com.mytweet.app.MyTweetApp;
 import tweet.com.mytweet.models.Timeline;
 import tweet.com.mytweet.models.Tweet;

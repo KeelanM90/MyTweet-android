@@ -1,4 +1,4 @@
-package tweet.com.mytweet.activities;
+package tweet.com.mytweet.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +21,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import tweet.com.mytweet.R;
+import tweet.com.mytweet.activities.TweetActivity;
 import tweet.com.mytweet.app.MyTweetApp;
 import tweet.com.mytweet.helpers.IntentHelper;
 import tweet.com.mytweet.models.Timeline;

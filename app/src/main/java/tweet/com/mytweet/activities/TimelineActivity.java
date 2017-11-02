@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
 import tweet.com.mytweet.R;
+import tweet.com.mytweet.fragments.TimelineFragment;
 
 /**
  * Created by keela on 01/11/2017.
