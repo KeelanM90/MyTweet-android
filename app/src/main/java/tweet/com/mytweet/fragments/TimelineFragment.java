@@ -102,6 +102,10 @@ public class TimelineFragment extends ListFragment implements OnItemClickListene
     @Override
     public void onResume() {
         super.onResume();
+        for (Tweet tweet: tweets) {
+            if (tweet.getTweetMessage().length() == 0)
+                timeline.deleteTweet(tweet);
+        }
         adapter.notifyDataSetChanged();
     }
 

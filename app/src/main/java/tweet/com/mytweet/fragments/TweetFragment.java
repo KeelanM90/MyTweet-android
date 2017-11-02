@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import tweet.com.mytweet.R;
 import tweet.com.mytweet.activities.TweetActivity;
@@ -32,8 +33,6 @@ import tweet.com.mytweet.models.User;
 import static tweet.com.mytweet.helpers.ContactHelper.getContact;
 import static tweet.com.mytweet.helpers.ContactHelper.getEmail;
 import static tweet.com.mytweet.helpers.ContactHelper.sendEmail;
-import static tweet.com.mytweet.helpers.IntentHelper.navigateUp;
-import static tweet.com.mytweet.helpers.IntentHelper.selectContact;
 
 public class TweetFragment extends Fragment implements TextWatcher, View.OnClickListener {
 
@@ -45,6 +44,7 @@ public class TweetFragment extends Fragment implements TextWatcher, View.OnClick
     private Timeline timeline;
     private TextView date;
     private Button emailButton;
+    private Button tweetButton;
 
     Button contactButton;
 
@@ -68,9 +68,8 @@ public class TweetFragment extends Fragment implements TextWatcher, View.OnClick
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
-    {
-        super.onCreateView(inflater,  parent, savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+        super.onCreateView(inflater, parent, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_tweet, parent, false);
 
         TweetActivity tweetActivity = (TweetActivity) getActivity();
@@ -82,16 +81,17 @@ public class TweetFragment extends Fragment implements TextWatcher, View.OnClick
         return v;
     }
 
-    private void addListeners(View v)
-    {
+    private void addListeners(View v) {
         tweetBody = (EditText) v.findViewById(R.id.tweetBody);
         textCounter = (TextView) v.findViewById(R.id.charCount);
         date = (TextView) v.findViewById(R.id.dateText);
         contactButton = (Button) v.findViewById(R.id.contactButton);
         emailButton = (Button) v.findViewById(R.id.emailButton);
+        tweetButton = (Button) v.findViewById(R.id.tweetButton);
 
         emailButton.setOnClickListener(this);
         contactButton.setOnClickListener(this);
+        tweetButton.setOnClickListener(this);
         tweetBody.addTextChangedListener(this);
 
         date.setText(tweet.getDateString());
@@ -99,8 +99,7 @@ public class TweetFragment extends Fragment implements TextWatcher, View.OnClick
         updateControls(tweet);
     }
 
-    public void updateControls(Tweet tweet)
-    {
+    public void updateControls(Tweet tweet) {
         tweetBody.setText(tweet.getTweetMessage());
         date.setText(tweet.getDateString());
     }
@@ -122,18 +121,16 @@ public class TweetFragment extends Fragment implements TextWatcher, View.OnClick
     }
 
     @Override
-    public void onPause()
-    {
+    public void onPause() {
         super.onPause();
         timeline.saveTweets();
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
-            case android.R.id.home:  navigateUp(getActivity());
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                getActivity().finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -142,16 +139,16 @@ public class TweetFragment extends Fragment implements TextWatcher, View.OnClick
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-
             case R.id.contactButton:
                 Intent i = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
                 startActivityForResult(i, REQUEST_CONTACT);
                 break;
-
-            case R.id.emailButton :
+            case R.id.emailButton:
                 User user = app.userStore.getUser(tweet.getUserId());
-                sendEmail(getActivity(), emailAddress, "Tweet from " + user.firstName + " " + user.lastName,tweet.getEmailableTweet());
-                //sendEmail(getActivity(), emailAddress, "Tweet from " + tweet.getUserId() + " " + user.id,tweet.getEmailableTweet());
+                sendEmail(getActivity(), emailAddress, "Tweet from " + user.firstName + " " + user.lastName, tweet.getEmailableTweet());
+                break;
+            case R.id.tweetButton:
+                getActivity().finish();
                 break;
         }
     }
@@ -167,7 +164,8 @@ public class TweetFragment extends Fragment implements TextWatcher, View.OnClick
         switch (requestCode) {
             case REQUEST_CONTACT:
                 this.data = data;
-                checkContactsReadPermission();
+                if (data != null)
+                    checkContactsReadPermission();
                 break;
         }
     }
@@ -180,8 +178,7 @@ public class TweetFragment extends Fragment implements TextWatcher, View.OnClick
             //We can request the permission.
             ActivityCompat.requestPermissions(getActivity(),
                     new String[]{Manifest.permission.READ_CONTACTS}, REQUEST_CONTACT);
-        }
-        else {
+        } else {
             //We already have permission, so go head and read the contact
             readContact();
         }
