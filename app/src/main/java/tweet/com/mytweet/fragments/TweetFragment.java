@@ -148,6 +148,7 @@ public class TweetFragment extends Fragment implements TextWatcher, View.OnClick
                 sendEmail(getActivity(), emailAddress, "Tweet from " + user.firstName + " " + user.lastName, tweet.getEmailableTweet());
                 break;
             case R.id.tweetButton:
+                Toast.makeText(getActivity(), "Message Sent", Toast.LENGTH_LONG).show();
                 getActivity().finish();
                 break;
         }

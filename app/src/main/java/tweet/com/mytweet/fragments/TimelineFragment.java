@@ -21,6 +21,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import tweet.com.mytweet.R;
+import tweet.com.mytweet.activities.SettingsActivity;
 import tweet.com.mytweet.activities.TweetActivity;
 import tweet.com.mytweet.app.MyTweetApp;
 import tweet.com.mytweet.helpers.IntentHelper;
@@ -101,6 +102,9 @@ public class TimelineFragment extends ListFragment implements OnItemClickListene
                 }
                 return true;
 
+            case R.id.action_settings:
+                startActivity(new Intent(getActivity(), SettingsActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -22,4 +22,12 @@
     <string name="loginSignIn">Apply</string>
     <string name="delete_tweet">Delete Tweet</string>
     <string name="clear">Clear</string>
+    <string name="email_summary">Please enter your email</string>
+    <string name="email">Email</string>
+    <string name="password_summary">You may set your password here</string>
+    <string name="password">Password</string>
+    <string name="firstname_summary">Your First Name</string>
+    <string name="firstname">First name</string>
+    <string name="lastname_summary">Your Last Name</string>
+    <string name="lastname">Last name</string>
 </resources>
