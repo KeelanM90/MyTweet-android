@@ -29,6 +29,7 @@ public class Signup extends AppCompatActivity {
 
         MyTweetApp app = MyTweetApp.getApp();
         app.userStore.addUser(user);
+        app.userStore.saveUsers();
 
         startActivity (new Intent(this, Welcome.class));
     }
