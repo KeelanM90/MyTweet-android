@@ -1,11 +1,10 @@
 package tweet.com.mytweet.activities;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.Toast;
 
 import tweet.com.mytweet.R;
 import tweet.com.mytweet.app.MyTweetApp;
@@ -19,8 +18,7 @@ public class TweetActivity extends AppCompatActivity {
     public ActionBar actionBar;
     MyTweetApp app = MyTweetApp.getApp();
 
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_container);
 
@@ -32,8 +30,7 @@ public class TweetActivity extends AppCompatActivity {
         Long tweetId = (Long) getIntent().getSerializableExtra(EXTRA_TWEET_ID);
         Tweet tweet = app.timeline.getTweet(tweetId);
 
-        if (fragment == null)
-        {
+        if (fragment == null) {
             if (tweet.getUserId().equals(app.loggedInUser.id)) {
                 fragment = new TweetFragment();
                 manager.beginTransaction().add(R.id.fragmentContainer, fragment).commit();

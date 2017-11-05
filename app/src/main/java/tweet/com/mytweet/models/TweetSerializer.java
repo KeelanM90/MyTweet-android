@@ -20,19 +20,16 @@ import java.util.ArrayList;
  * Created by keela on 01/11/2017.
  */
 
-public class TweetSerializer
-{
+public class TweetSerializer {
     private Context mContext;
     private String mFilename;
 
-    public TweetSerializer(Context c, String f)
-    {
+    public TweetSerializer(Context c, String f) {
         mContext = c;
         mFilename = f;
     }
 
-    public void saveTweets(ArrayList<Tweet> tweets) throws JSONException, IOException
-    {
+    public void saveTweets(ArrayList<Tweet> tweets) throws JSONException, IOException {
         // build an array in JSON
         JSONArray array = new JSONArray();
         for (Tweet c : tweets)
@@ -40,49 +37,38 @@ public class TweetSerializer
 
         // write the file to disk
         Writer writer = null;
-        try
-        {
+        try {
             OutputStream out = mContext.openFileOutput(mFilename, Context.MODE_PRIVATE);
             writer = new OutputStreamWriter(out);
             writer.write(array.toString());
-        }
-        finally
-        {
+        } finally {
             if (writer != null)
                 writer.close();
         }
     }
 
-    public ArrayList<Tweet> loadTweets() throws IOException, JSONException
-    {
+    public ArrayList<Tweet> loadTweets() throws IOException, JSONException {
         ArrayList<Tweet> tweets = new ArrayList<Tweet>();
         BufferedReader reader = null;
-        try
-        {
+        try {
             // open and read the file into a StringBuilder
             InputStream in = mContext.openFileInput(mFilename);
             reader = new BufferedReader(new InputStreamReader(in));
             StringBuilder jsonString = new StringBuilder();
             String line = null;
-            while ((line = reader.readLine()) != null)
-            {
+            while ((line = reader.readLine()) != null) {
                 // line breaks are omitted and irrelevant
                 jsonString.append(line);
             }
             // parse the JSON using JSONTokener
             JSONArray array = (JSONArray) new JSONTokener(jsonString.toString()).nextValue();
             // build the array of residences from JSONObjects
-            for (int i = 0; i < array.length(); i++)
-            {
+            for (int i = 0; i < array.length(); i++) {
                 tweets.add(new Tweet(array.getJSONObject(i)));
             }
-        }
-        catch (FileNotFoundException e)
-        {
+        } catch (FileNotFoundException e) {
             // we will ignore this one, since it happens when we start fresh
-        }
-        finally
-        {
+        } finally {
             if (reader != null)
                 reader.close();
         }

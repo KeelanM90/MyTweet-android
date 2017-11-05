@@ -15,11 +15,9 @@ public class UserStore {
     public UserStore(UserSerializer userSerializer) {
 
         this.userSerializer = userSerializer;
-        try
-        {
+        try {
             users = userSerializer.loadUsers();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             users = new ArrayList<>();
         }
     }
@@ -51,15 +49,11 @@ public class UserStore {
         return null;
     }
 
-    public boolean saveUsers()
-    {
-        try
-        {
+    public boolean saveUsers() {
+        try {
             userSerializer.saveUsers(users);
             return true;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             return false;
         }
     }

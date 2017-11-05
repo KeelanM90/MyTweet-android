@@ -20,19 +20,16 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 
-public class UserSerializer
-{
+public class UserSerializer {
     private Context mContext;
     private String mFilename;
 
-    public UserSerializer(Context c, String f)
-    {
+    public UserSerializer(Context c, String f) {
         mContext = c;
         mFilename = f;
     }
 
-    public void saveUsers(ArrayList<User> users) throws JSONException, IOException
-    {
+    public void saveUsers(ArrayList<User> users) throws JSONException, IOException {
         // build an array in JSON
         JSONArray array = new JSONArray();
         for (User c : users)
@@ -40,49 +37,38 @@ public class UserSerializer
 
         // write the file to disk
         Writer writer = null;
-        try
-        {
+        try {
             OutputStream out = mContext.openFileOutput(mFilename, Context.MODE_PRIVATE);
             writer = new OutputStreamWriter(out);
             writer.write(array.toString());
-        }
-        finally
-        {
+        } finally {
             if (writer != null)
                 writer.close();
         }
     }
 
-    public ArrayList<User> loadUsers() throws IOException, JSONException
-    {
+    public ArrayList<User> loadUsers() throws IOException, JSONException {
         ArrayList<User> users = new ArrayList<User>();
         BufferedReader reader = null;
-        try
-        {
+        try {
             // open and read the file into a StringBuilder
             InputStream in = mContext.openFileInput(mFilename);
             reader = new BufferedReader(new InputStreamReader(in));
             StringBuilder jsonString = new StringBuilder();
             String line = null;
-            while ((line = reader.readLine()) != null)
-            {
+            while ((line = reader.readLine()) != null) {
                 // line breaks are omitted and irrelevant
                 jsonString.append(line);
             }
             // parse the JSON using JSONTokener
             JSONArray array = (JSONArray) new JSONTokener(jsonString.toString()).nextValue();
             // build the array of residences from JSONObjects
-            for (int i = 0; i < array.length(); i++)
-            {
+            for (int i = 0; i < array.length(); i++) {
                 users.add(new User(array.getJSONObject(i)));
             }
-        }
-        catch (FileNotFoundException e)
-        {
+        } catch (FileNotFoundException e) {
             // we will ignore this one, since it happens when we start fresh
-        }
-        finally
-        {
+        } finally {
             if (reader != null)
                 reader.close();
         }

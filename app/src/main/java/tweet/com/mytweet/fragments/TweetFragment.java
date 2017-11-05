@@ -46,7 +46,7 @@ public class TweetFragment extends Fragment implements TextWatcher, View.OnClick
     private Button emailButton;
     private Button tweetButton;
 
-    private Button contactButton;
+    Button contactButton;
 
     private String emailAddress = "";
     private Intent data;
@@ -93,6 +93,8 @@ public class TweetFragment extends Fragment implements TextWatcher, View.OnClick
         contactButton.setOnClickListener(this);
         tweetButton.setOnClickListener(this);
         tweetBody.addTextChangedListener(this);
+
+        date.setText(tweet.getDateString());
 
         updateControls(tweet);
     }
