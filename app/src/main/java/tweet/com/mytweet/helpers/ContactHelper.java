@@ -9,6 +9,9 @@ import android.provider.ContactsContract;
 
 /**
  * Created by keela on 02/11/2017.
+ *
+ * reference: All aspects of this app are heavily based around the below tutorials with parts of the original code remaining
+ * https://wit-ictskills-2017.github.io/mobile-app-dev/labwall.html
  */
 
 public class ContactHelper {

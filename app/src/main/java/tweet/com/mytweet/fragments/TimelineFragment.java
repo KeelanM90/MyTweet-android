@@ -31,9 +31,12 @@ import tweet.com.mytweet.models.Tweet;
 
 /**
  * Created by keela on 02/11/2017.
+ *
+ * reference: All aspects of this app are heavily based around the below tutorials
+ * https://wit-ictskills-2017.github.io/mobile-app-dev/labwall.html
  */
 
-public class TimelineFragment extends ListFragment implements OnItemClickListener,  AbsListView.MultiChoiceModeListener {
+public class TimelineFragment extends ListFragment implements OnItemClickListener, AbsListView.MultiChoiceModeListener {
     private ArrayList<Tweet> tweets;
     private Timeline timeline;
     private TimelineAdapter adapter;
@@ -95,13 +98,11 @@ public class TimelineFragment extends ListFragment implements OnItemClickListene
                 startActivityForResult(i, 0);
                 return true;
             case R.id.action_clear:
-
-                for (int j  = tweets.size()  - 1; j >= 0; j--) {
+                for (int j = tweets.size() - 1; j >= 0; j--) {
                     timeline.deleteTweet(tweets.get(j));
                     adapter.notifyDataSetChanged();
                 }
                 return true;
-
             case R.id.action_settings:
                 startActivity(new Intent(getActivity(), SettingsActivity.class));
                 return true;
@@ -113,7 +114,7 @@ public class TimelineFragment extends ListFragment implements OnItemClickListene
     @Override
     public void onResume() {
         super.onResume();
-        for (Tweet tweet: tweets) {
+        for (Tweet tweet : tweets) {
             if (tweet.getTweetMessage().length() == 0)
                 timeline.deleteTweet(tweet);
         }
@@ -122,24 +123,20 @@ public class TimelineFragment extends ListFragment implements OnItemClickListene
 
     /* ************ MultiChoiceModeListener methods (begin) *********** */
     @Override
-    public boolean onCreateActionMode(ActionMode actionMode, Menu menu)
-    {
+    public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
         MenuInflater inflater = actionMode.getMenuInflater();
         inflater.inflate(R.menu.timeline_context, menu);
         return true;
     }
 
     @Override
-    public boolean onPrepareActionMode(ActionMode actionMode, Menu menu)
-    {
+    public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
         return false;
     }
 
     @Override
-    public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem)
-    {
-        switch (menuItem.getItemId())
-        {
+    public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
             case R.id.menu_item_delete_tweet:
                 deleteTweet(actionMode);
                 return true;
@@ -148,12 +145,9 @@ public class TimelineFragment extends ListFragment implements OnItemClickListene
         }
     }
 
-    private void deleteTweet(ActionMode actionMode)
-    {
-        for (int i = adapter.getCount() - 1; i >= 0; i--)
-        {
-            if (listView.isItemChecked(i))
-            {
+    private void deleteTweet(ActionMode actionMode) {
+        for (int i = adapter.getCount() - 1; i >= 0; i--) {
+            if (listView.isItemChecked(i)) {
                 timeline.deleteTweet(adapter.getItem(i));
             }
         }
@@ -162,13 +156,11 @@ public class TimelineFragment extends ListFragment implements OnItemClickListene
     }
 
     @Override
-    public void onDestroyActionMode(ActionMode actionMode)
-    {
+    public void onDestroyActionMode(ActionMode actionMode) {
     }
 
     @Override
-    public void onItemCheckedStateChanged(ActionMode actionMode, int position, long id, boolean checked)
-    {
+    public void onItemCheckedStateChanged(ActionMode actionMode, int position, long id, boolean checked) {
     }
 }
 

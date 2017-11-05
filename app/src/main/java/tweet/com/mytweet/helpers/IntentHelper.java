@@ -7,8 +7,9 @@ import java.io.Serializable;
 
 /**
  * Created by keela on 01/11/2017.
- * <p>
- * src: https://wit-ictskills-2017.github.io/mobile-app-dev/topic04-a/book-a-myrent-03%20(Action%20Bar%20&%20Dialogs)/index.html#/03
+ *
+ * reference: All aspects of this app are heavily based around the below tutorials with parts of the original code remaining
+ * https://wit-ictskills-2017.github.io/mobile-app-dev/labwall.html
  */
 
 public class IntentHelper {
