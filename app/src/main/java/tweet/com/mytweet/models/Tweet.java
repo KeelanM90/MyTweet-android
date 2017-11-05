@@ -47,7 +47,7 @@ public class Tweet {
         json.put(JSON_ID  , Long.toString(id));
         json.put(JSON_TWEET_MESSAGE  , tweetMessage);
         json.put(JSON_DATE  , date);
-        json.put(JSON_USER_ID  , userId);
+        json.put(JSON_USER_ID  , Long.toString(userId));
         return json;
     }
 
