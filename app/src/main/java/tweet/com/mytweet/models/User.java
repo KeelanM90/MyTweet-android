@@ -26,6 +26,13 @@ public class User {
     private static final String JSON_EMAIL = "email";
     private static final String JSON_PASSWORD = "password";
 
+    public User(String email, String password) {
+        this.firstName = "";
+        this.lastName = "";
+        this.email = email;
+        this.password = password;
+    }
+
     public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;

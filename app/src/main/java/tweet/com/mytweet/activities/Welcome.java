@@ -19,7 +19,7 @@ import tweet.com.mytweet.models.User;
  * Created by keela on 01/11/2017.
  */
 
-public class Welcome extends AppCompatActivity implements Callback<Boolean> {
+public class Welcome extends AppCompatActivity {
     private MyTweetApp app;
 
     @Override
@@ -34,22 +34,19 @@ public class Welcome extends AppCompatActivity implements Callback<Boolean> {
     public void onResume() {
         super.onResume();
         app.currentUser = null;
-        Call<Boolean> call1 = (Call<Boolean>) app.tweetService.getAvailability();
-        call1.enqueue(this);
-    }
+        Call<Boolean> call = (Call<Boolean>) app.tweetServiceOpen.getAvailability();
+        call.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                serviceAvailableMessage();
+                app.tweetServiceAvailable = true;
+            }
 
-    @Override
-    public void onResponse(Call<Boolean> call, Response<Boolean> response)
-    {
-        serviceAvailableMessage();
-        app.tweetServiceAvailable = true;
-    }
-
-    @Override
-    public void onFailure(Call<Boolean> call, Throwable t)
-    {
-        app.tweetServiceAvailable = false;
-        serviceUnavailableMessage();
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                serviceUnavailableMessage();
+            }
+        });
     }
 
     public void loginPressed(View view) {

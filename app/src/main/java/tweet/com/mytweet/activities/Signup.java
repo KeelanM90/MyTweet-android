@@ -34,7 +34,7 @@ public class Signup extends AppCompatActivity implements Callback<User> {
         User user = new User(firstName.getText().toString(), lastName.getText().toString(), email.getText().toString(), password.getText().toString());
 
         app = (MyTweetApp) getApplication();
-        Call<User> call = (Call<User>) app.tweetService.createUser(user);
+        Call<User> call = (Call<User>) app.tweetServiceOpen.createUser(user);
         call.enqueue(this);
     }
 
@@ -43,9 +43,7 @@ public class Signup extends AppCompatActivity implements Callback<User> {
     {
         app.users.add(response.body());
 
-        //Toast.makeText(this, response.body().firstName + " " + response.body().lastName + "added", Toast.LENGTH_LONG).show();
-
-        startActivity(new Intent(this, Welcome.class));
+        this.finish();
     }
 
     @Override

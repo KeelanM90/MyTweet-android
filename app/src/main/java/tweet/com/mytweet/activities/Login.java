@@ -8,37 +8,66 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import tweet.com.mytweet.R;
 import tweet.com.mytweet.app.MyTweetApp;
+import tweet.com.mytweet.helpers.RetrofitServiceFactory;
+import tweet.com.mytweet.helpers.TweetService;
 import tweet.com.mytweet.models.Timeline;
+import tweet.com.mytweet.models.Token;
 import tweet.com.mytweet.models.TweetSerializer;
+import tweet.com.mytweet.models.User;
 import tweet.com.mytweet.models.UserStore;
 
-public class Login extends AppCompatActivity {
+public class Login extends AppCompatActivity implements Callback<Token> {
+
+    MyTweetApp app;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        app = MyTweetApp.getApp();;
     }
 
     public void loginPressed (View view)
     {
-        MyTweetApp app = MyTweetApp.getApp();;
-
         EditText email     = (EditText)  findViewById(R.id.email);
-        EditText password  = (EditText)  findViewById(R.id.password);
+        EditText passwordText  = (EditText)  findViewById(R.id.password);
 
         String emailAddress = email.getText().toString();
-        if (app.validUser(emailAddress, password.getText().toString()))
+        String password = passwordText.getText().toString();
+        if (emailAddress != "" && password  != "")
         {
-            app.setLoggedInUser(emailAddress);
-            startActivity (new Intent(this, TimelineActivity.class));
+            User tempUser = new User(emailAddress, password);
+            Call<Token> call = (Call<Token>) app.tweetServiceOpen.authenticate(tempUser);
+            call.enqueue(this);
         }
         else
         {
-            Toast toast = Toast.makeText(this, "Invalid Credentials", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, "Please enter both an email and password", Toast.LENGTH_SHORT);
             toast.show();
         }
+    }
+
+    @Override
+    public void onResponse(Call<Token> call, Response<Token> response) {
+        app.tweetServiceAvailable = true;
+        Token auth = response.body();
+        if(auth != null && auth.success != false) {
+            User user = auth.user;
+
+            app.tweetService = RetrofitServiceFactory.createService(TweetService.class, auth.token);
+      //      app.serviceAvailableMessage();
+            startActivity(new Intent(this, TimelineActivity.class));
+        }
+    }
+
+    @Override
+    public void onFailure(Call<Token> call, Throwable t) {
+        Toast toast = Toast.makeText(app, "Log in Failed", Toast.LENGTH_SHORT);
     }
 }

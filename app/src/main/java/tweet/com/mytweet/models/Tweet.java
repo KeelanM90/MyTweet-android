@@ -15,8 +15,11 @@ import java.util.Random;
 
 public class Tweet {
     public Long id;
-    public Long date;
-    private String tweetMessage;
+    public String _id;
+    public String date;
+    public String img;
+    public User tweeter;
+    private String tweet;
     private Long userId;
 
     private static final String JSON_ID = "id";
@@ -24,24 +27,28 @@ public class Tweet {
     private static final String JSON_DATE = "date";
     private static final String JSON_USER_ID = "userid";
 
+    public Tweet() {
+        date = new Date().toString();
+    }
+
     public Tweet(Long userId) {
         id = unsignedLong();
-        date = new Date().getTime();
-        tweetMessage = "";
+        date = new Date().toString();
+        tweet = "";
         this.userId = userId;
     }
 
     public Tweet(JSONObject json) throws JSONException {
         id = json.getLong(JSON_ID);
-        tweetMessage = json.getString(JSON_TWEET_MESSAGE);
-        date = json.getLong(JSON_DATE);
+        tweet = json.getString(JSON_TWEET_MESSAGE);
+        date = json.getString(JSON_DATE);
         userId = json.getLong(JSON_USER_ID);
     }
 
     public JSONObject toJSON() throws JSONException {
         JSONObject json = new JSONObject();
         json.put(JSON_ID, Long.toString(id));
-        json.put(JSON_TWEET_MESSAGE, tweetMessage);
+        json.put(JSON_TWEET_MESSAGE, tweet);
         json.put(JSON_DATE, date);
         json.put(JSON_USER_ID, Long.toString(userId));
         return json;
@@ -62,11 +69,11 @@ public class Tweet {
     }
 
     public void setTweetMessage(String tweetMessage) {
-        this.tweetMessage = tweetMessage;
+        this.tweet = tweetMessage;
     }
 
     public String getTweetMessage() {
-        return tweetMessage;
+        return tweet;
     }
 
     public String getDateString() {
@@ -79,11 +86,12 @@ public class Tweet {
 
     private String dateString() {
         String dateFormat = "EEE d MMM yyyy H:mm";
-        return android.text.format.DateFormat.format(dateFormat, date).toString();
+        //return android.text.format.DateFormat.format(dateFormat, date).toString();
+        return null;
     }
 
     public String getEmailableTweet() {
-        String tweetString = "Tweet: " + tweetMessage + " Date: " + dateString();
+        String tweetString = "Tweet: " + tweet + " Date: " + dateString();
         return tweetString;
     }
 }
