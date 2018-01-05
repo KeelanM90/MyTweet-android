@@ -38,13 +38,12 @@ public class Welcome extends AppCompatActivity {
         call.enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                serviceAvailableMessage();
                 app.tweetServiceAvailable = true;
             }
 
             @Override
             public void onFailure(Call<Boolean> call, Throwable t) {
-                serviceUnavailableMessage();
+                app.serviceUnavailableMessage();
             }
         });
     }
@@ -53,7 +52,7 @@ public class Welcome extends AppCompatActivity {
         if (app.tweetServiceAvailable) {
             startActivity(new Intent(this, Login.class));
         } else {
-            serviceUnavailableMessage();
+            app.serviceUnavailableMessage();
         }
     }
 
@@ -61,18 +60,8 @@ public class Welcome extends AppCompatActivity {
         if (app.tweetServiceAvailable) {
             startActivity(new Intent(this, Signup.class));
         } else {
-            serviceUnavailableMessage();
+            app.serviceUnavailableMessage();
         }
-    }
-
-    void serviceUnavailableMessage() {
-        Toast toast = Toast.makeText(this, "Tweet Service Unavailable. Try again later", Toast.LENGTH_LONG);
-        toast.show();
-    }
-
-    void serviceAvailableMessage() {
-        Toast toast = Toast.makeText(this, "Tweet Contacted Successfully", Toast.LENGTH_LONG);
-        toast.show();
     }
 }
 

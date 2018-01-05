@@ -39,6 +39,13 @@ public class User {
         this.email = email;
         this.password = password;
     }
+
+    public User(User user) {
+        this.firstName = user.firstName;
+        this.lastName = user.lastName;
+        this.email = user.email;
+        this.password = user.password;
+    }
     /**
     public User(String firstName, String lastName, String email, String password) {
         id = unsignedLong();

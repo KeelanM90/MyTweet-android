@@ -2,11 +2,8 @@ package tweet.com.mytweet.fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,22 +22,18 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Logger;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import tweet.com.mytweet.R;
-import tweet.com.mytweet.activities.SettingsActivity;
-import tweet.com.mytweet.activities.TweetActivity;
+import tweet.com.mytweet.activities.Settings;
 import tweet.com.mytweet.app.MyTweetApp;
-import tweet.com.mytweet.helpers.IntentHelper;
 import tweet.com.mytweet.models.Timeline;
 import tweet.com.mytweet.models.Tweet;
 import tweet.com.mytweet.models.User;
@@ -113,9 +106,9 @@ public class TimelineFragment extends ListFragment implements OnItemClickListene
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        /**
         switch (item.getItemId()) {
-            case R.id.menu_item_new_tweet:
+            /**
+             case R.id.menu_item_new_tweet:
                 Tweet tweet = new Tweet(app.loggedInUser.id);
                 timeline.addTweet(tweet);
                 Intent i = new Intent(getActivity(), TweetActivity.class);
@@ -128,27 +121,19 @@ public class TimelineFragment extends ListFragment implements OnItemClickListene
                     adapter.notifyDataSetChanged();
                 }
                 return true;
+         */
             case R.id.action_settings:
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
+                startActivity(new Intent(getActivity(), Settings.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
-         */
-        return true;
     }
 
     @Override
     public void onResume() {
         super.onResume();
         getTweets();
-        /**
-        for (Tweet tweet : tweets) {
-            if (tweet.getTweetMessage().length() == 0)
-                timeline.deleteTweet(tweet);
-        }
-         */
-//        adapter.notifyDataSetChanged();
     }
 
     /* ************ MultiChoiceModeListener methods (begin) *********** */

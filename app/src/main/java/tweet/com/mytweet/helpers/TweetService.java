@@ -7,6 +7,7 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import tweet.com.mytweet.models.Tweet;
 import tweet.com.mytweet.models.User;
@@ -18,6 +19,9 @@ public interface TweetService
 
     @GET("/api/users/{id}")
     Call<User> getUser(@Path("id") String id);
+
+    @PUT("/api/users")
+    Call<User> updateUser(@Body User user);
 
     @GET("/api/tweets")
     Call<List<Tweet>> getTweets();

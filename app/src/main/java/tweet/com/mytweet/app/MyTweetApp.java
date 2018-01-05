@@ -40,7 +40,6 @@ public class MyTweetApp extends Application implements Callback<Token> {
     public TweetService tweetService;
     public TweetServiceOpen tweetServiceOpen;
     public boolean tweetServiceAvailable = false;
-    public String  service_url  = "http://54.246.244.111:4000";   // API IP Address
 
     public User  currentUser;
     public List<User> users = new ArrayList<User>();
