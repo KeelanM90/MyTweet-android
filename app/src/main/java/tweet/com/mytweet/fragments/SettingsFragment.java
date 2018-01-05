@@ -37,6 +37,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        /**
         User user = app.userStore.getUser(app.loggedInUser.id);
         if (key.equals("email")) {
             user.email = sharedPreferences.getString(key, "");
@@ -47,6 +48,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         } else if (key.equals("lastname")) {
             user.lastName = sharedPreferences.getString(key, "");
         }
+         */
         app.userStore.saveUsers();
     }
 }

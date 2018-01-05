@@ -5,17 +5,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import tweet.com.mytweet.R;
 import tweet.com.mytweet.app.MyTweetApp;
 import tweet.com.mytweet.models.User;
 
-public class Signup extends AppCompatActivity {
+public class Signup extends AppCompatActivity implements Callback<User> {
 
+    MyTweetApp app;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+        app = (MyTweetApp) getApplication();
     }
 
     public void signupPressed (View view)
@@ -27,10 +33,27 @@ public class Signup extends AppCompatActivity {
 
         User user = new User(firstName.getText().toString(), lastName.getText().toString(), email.getText().toString(), password.getText().toString());
 
-        MyTweetApp app = MyTweetApp.getApp();
-        app.userStore.addUser(user);
-        app.userStore.saveUsers();
+        app = (MyTweetApp) getApplication();
+        Call<User> call = (Call<User>) app.tweetService.createUser(user);
+        call.enqueue(this);
+    }
 
+    @Override
+    public void onResponse(Call<User> call, Response<User> response)
+    {
+        app.users.add(response.body());
+
+        //Toast.makeText(this, response.body().firstName + " " + response.body().lastName + "added", Toast.LENGTH_LONG).show();
+
+        startActivity(new Intent(this, Welcome.class));
+    }
+
+    @Override
+    public void onFailure(Call<User> call, Throwable t)
+    {
+        app.tweetServiceAvailable = false;
+        Toast toast = Toast.makeText(this, "Tweet Service Unavailable. Try again later", Toast.LENGTH_LONG);
+        toast.show();
         startActivity (new Intent(this, Welcome.class));
     }
 }

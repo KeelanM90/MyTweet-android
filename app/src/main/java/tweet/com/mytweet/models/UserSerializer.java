@@ -35,8 +35,8 @@ public class UserSerializer {
     public void saveUsers(ArrayList<User> users) throws JSONException, IOException {
         // build an array in JSON
         JSONArray array = new JSONArray();
-        for (User c : users)
-            array.put(c.toJSON());
+        //for (User c : users)
+            //array.put(c.toJSON());
 
         // write the file to disk
         Writer writer = null;
