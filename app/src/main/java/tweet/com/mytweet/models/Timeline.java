@@ -1,5 +1,8 @@
 package tweet.com.mytweet.models;
 
+import android.util.Log;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 
 /**
@@ -21,6 +24,7 @@ public class Timeline {
             tweets = tweetSerializer.loadTweets();
         }
         catch (Exception e) {
+            Log.e("this is error", e.toString());
             tweets = new ArrayList<>();
         }
     }
@@ -33,16 +37,32 @@ public class Timeline {
     public void deleteTweet(Tweet tweet)
     {
         tweets.remove(tweet);
-        saveTweets();
+        this.saveTweets();
     }
 
     public Tweet getTweet(Long id) {
         for (Tweet tweet : tweets) {
-            if (id.equals(tweet.id)) {
+            if (id.equals(tweet._id)) {
                 return tweet;
             }
         }
         return null;
+    }
+
+    public  void setTweets(ArrayList<Tweet> newTweets) {
+        this.tweets = new ArrayList<>(newTweets);
+        saveTweets();
+    }
+
+    public void refresh() {
+        try
+        {
+            tweets = tweetSerializer.loadTweets();
+        }
+        catch (Exception e) {
+            Log.e("this is error", e.toString());
+            tweets = new ArrayList<>();
+        }
     }
 
     public boolean saveTweets()

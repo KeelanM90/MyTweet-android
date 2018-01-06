@@ -27,9 +27,9 @@ public class Signup extends AppCompatActivity implements Callback<User> {
     public void signupPressed (View view)
     {
         EditText firstName = (EditText)  findViewById(R.id.firstName);
-        EditText lastName  = (EditText)  findViewById(R.id.lastName);
-        EditText email     = (EditText)  findViewById(R.id.Email);
-        EditText password  = (EditText)  findViewById(R.id.Password);
+        EditText lastName = (EditText)  findViewById(R.id.lastName);
+        EditText email = (EditText)  findViewById(R.id.Email);
+        EditText password = (EditText)  findViewById(R.id.Password);
 
         User user = new User(firstName.getText().toString(), lastName.getText().toString(), email.getText().toString(), password.getText().toString());
 

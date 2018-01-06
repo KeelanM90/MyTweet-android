@@ -35,12 +35,10 @@ public class Settings extends AppCompatActivity implements Callback<User> {
         firstName.setText(app.currentUser.firstName);
         lastName.setText(app.currentUser.lastName);
         email.setText(app.currentUser.email);
-        password.setText(app.currentUser.password);
     }
 
     public void updatePressed (View view)
     {
-
         User user = app.currentUser;
         user.firstName = firstName.getText().toString();
         user.lastName = lastName.getText().toString();
@@ -61,8 +59,6 @@ public class Settings extends AppCompatActivity implements Callback<User> {
     public void onFailure(Call<User> call, Throwable t)
     {
         app.tweetServiceAvailable = false;
-        Toast toast = Toast.makeText(this, "Tweet Service Unavailable. Try again later", Toast.LENGTH_LONG);
-        toast.show();
-        startActivity (new Intent(this, Welcome.class));
+        Toast.makeText(this, "Tweet Service Unavailable. Try again later", Toast.LENGTH_LONG).show();
     }
 }

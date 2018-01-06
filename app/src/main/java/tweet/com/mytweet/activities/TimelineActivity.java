@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
 import tweet.com.mytweet.R;
+import tweet.com.mytweet.fragments.GlobalTimelineFragment;
 import tweet.com.mytweet.fragments.TimelineFragment;
 
 /**
@@ -21,7 +22,7 @@ public class TimelineActivity extends AppCompatActivity {
         FragmentManager manager = getSupportFragmentManager();
         Fragment fragment = manager.findFragmentById(R.id.fragmentContainer);
         if (fragment == null) {
-            fragment = new TimelineFragment();
+            fragment = new GlobalTimelineFragment();
             manager.beginTransaction().add(R.id.fragmentContainer, fragment).commit();
         }
     }

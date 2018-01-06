@@ -1,8 +1,12 @@
 package tweet.com.mytweet.models;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
@@ -14,43 +18,42 @@ import java.util.Random;
  */
 
 public class Tweet {
-    public Long id;
     public String _id;
     public String date;
     public String img;
-    public User tweeter;
     private String tweet;
-    private Long userId;
+    public String tweeterName;
+    public User tweeter;
 
-    private static final String JSON_ID = "id";
+    private static final String JSON_ID = "_id";
     private static final String JSON_TWEET_MESSAGE = "tweetmessage";
     private static final String JSON_DATE = "date";
-    private static final String JSON_USER_ID = "userid";
+    private static final String JSON_IMG = "img";
+    private static final String JSON_TWEETER_NAME = "userid";
 
     public Tweet() {
         date = new Date().toString();
     }
 
-    public Tweet(Long userId) {
-        id = unsignedLong();
-        date = new Date().toString();
-        tweet = "";
-        this.userId = userId;
-    }
-
     public Tweet(JSONObject json) throws JSONException {
-        id = json.getLong(JSON_ID);
+        _id = json.getString(JSON_ID);
         tweet = json.getString(JSON_TWEET_MESSAGE);
+        img = json.getString(JSON_IMG);
         date = json.getString(JSON_DATE);
-        userId = json.getLong(JSON_USER_ID);
+        tweeterName = json.getString(JSON_TWEETER_NAME);
     }
 
     public JSONObject toJSON() throws JSONException {
+        if (img == null) {
+            img = "";
+        }
         JSONObject json = new JSONObject();
-        json.put(JSON_ID, Long.toString(id));
+        json.put(JSON_ID, _id);
         json.put(JSON_TWEET_MESSAGE, tweet);
+        json.put(JSON_IMG, img);
         json.put(JSON_DATE, date);
-        json.put(JSON_USER_ID, Long.toString(userId));
+        json.put(JSON_TWEETER_NAME, this.tweeterName);
+        Log.e("tweets", tweet);
         return json;
     }
 
@@ -80,14 +83,20 @@ public class Tweet {
         return dateString();
     }
 
-    public Long getUserId() {
-        return userId;
+    public String getUserId() {
+        return this.tweeter._id;
     }
 
     private String dateString() {
-        String dateFormat = "EEE d MMM yyyy H:mm";
-        //return android.text.format.DateFormat.format(dateFormat, date).toString();
-        return null;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        SimpleDateFormat readableFormat = new SimpleDateFormat("MMM d, yyyy hh:mm a");
+        String readableDate = "";
+        try {
+            Date date = format.parse(this.date);
+            readableDate = readableFormat.format(date);
+        } catch (ParseException e) {
+        }
+        return readableDate;
     }
 
     public String getEmailableTweet() {

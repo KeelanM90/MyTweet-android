@@ -93,7 +93,7 @@ public class ViewTweetFragment extends Fragment implements View.OnClickListener 
     }
 
     public void updateControls(Tweet tweet) {
-        User user = app.userStore.getUser(tweet.getUserId());
+        User user = app.currentUser;
         tweetBody.setText(tweet.getTweetMessage());
         tweeter.setText(user.firstName + " " + user.lastName);
         date.setText(tweet.getDateString());
@@ -117,7 +117,7 @@ public class ViewTweetFragment extends Fragment implements View.OnClickListener 
                 startActivityForResult(i, REQUEST_CONTACT);
                 break;
             case R.id.emailButton:
-                User user = app.userStore.getUser(tweet.getUserId());
+                User user = app.currentUser;
                 sendEmail(getActivity(), emailAddress, "Tweet from " + user.firstName + " " + user.lastName, tweet.getEmailableTweet());
                 break;
         }

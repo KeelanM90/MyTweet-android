@@ -35,8 +35,8 @@ public class TweetSerializer {
     public void saveTweets(ArrayList<Tweet> tweets) throws JSONException, IOException {
         // build an array in JSON
         JSONArray array = new JSONArray();
-        for (Tweet c : tweets)
-            array.put(c.toJSON());
+        for (Tweet t : tweets)
+            array.put(t.toJSON());
 
         // write the file to disk
         Writer writer = null;

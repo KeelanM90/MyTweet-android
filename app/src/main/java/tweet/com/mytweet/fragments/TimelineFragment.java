@@ -1,6 +1,5 @@
 package tweet.com.mytweet.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -14,18 +13,10 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -33,10 +24,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import tweet.com.mytweet.R;
 import tweet.com.mytweet.activities.Settings;
+import tweet.com.mytweet.activities.TweetActivity;
 import tweet.com.mytweet.app.MyTweetApp;
+import tweet.com.mytweet.helpers.IntentHelper;
 import tweet.com.mytweet.models.Timeline;
 import tweet.com.mytweet.models.Tweet;
 import tweet.com.mytweet.models.User;
+import tweet.com.mytweet.helpers.TimelineAdapter;
 
 
 /**
@@ -61,9 +55,8 @@ public class TimelineFragment extends ListFragment implements OnItemClickListene
         getActivity().setTitle(R.string.app_name);
 
         app = MyTweetApp.getApp();
-    //    timeline = app.timeline;
-    //    tweets = timeline.tweets;
-
+        timeline = app.timeline;
+        tweets = timeline.tweets;
 
        adapter = new TimelineAdapter(getActivity(), tweets);
        setListAdapter(adapter);
@@ -80,22 +73,18 @@ public class TimelineFragment extends ListFragment implements OnItemClickListene
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        /**
         Tweet tweet = ((TimelineAdapter) getListAdapter()).getItem(position);
         Intent i = new Intent(getActivity(), TweetActivity.class);
-        i.putExtra(TweetFragment.EXTRA_TWEET_ID, tweet.id);
+        i.putExtra(TweetFragment.EXTRA_TWEET_ID, tweet._id);
         startActivityForResult(i, 0);
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
         listView.setMultiChoiceModeListener(this);
-         */
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        /**
         Tweet tweet = adapter.getItem(position);
-        IntentHelper.startActivityWithData(getActivity(), TweetActivity.class, "TWEET_ID", tweet.id);
-         */
+        IntentHelper.startActivityWithData(getActivity(), TweetActivity.class, "TWEET_ID", tweet._id);
     }
 
     @Override
@@ -184,62 +173,20 @@ public class TimelineFragment extends ListFragment implements OnItemClickListene
     }
 
     public void onResponse(Call<List<Tweet>> call, Response<List<Tweet>> response) {
-        ArrayList<Tweet> array = new ArrayList<Tweet>();
 
         for(Tweet tweet: response.body()){
             tweet.tweeter = (User) tweet.tweeter;
+            tweet.tweeterName = tweet.tweeter.firstName + " " + tweet.tweeter.lastName;
             tweets.add(tweet);
         }
 
-        //adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
         app.tweetServiceAvailable = true;
     }
 
     @Override
     public void onFailure(Call<List<Tweet>> call, Throwable t) {
-        Toast toast = Toast.makeText(getActivity(), "Connection error, unable to retrieve tweets", Toast.LENGTH_SHORT);
-        toast.show();
+        Toast.makeText(getActivity(), "Connection error, unable to retrieve tweets", Toast.LENGTH_SHORT).show();
         app.tweetServiceAvailable = false;
-    }
-}
-
-class TimelineAdapter extends ArrayAdapter<Tweet> {
-    private Context context;
-    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-    SimpleDateFormat readableFormat = new SimpleDateFormat("MMM d, yyyy hh:mm a");
-
-    public TimelineAdapter(Context context, ArrayList<Tweet> tweets) {
-        super(context, 0, tweets);
-        this.context = context;
-
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        if (convertView == null) {
-            convertView = inflater.inflate(R.layout.tweet_view, null);
-        }
-        Tweet tweet = getItem(position);
-
-        TextView tweetBody = (TextView) convertView.findViewById(R.id.tweetBody);
-        TextView tweeterTextView = (TextView) convertView.findViewById(R.id.tweeter);
-        TextView dateTextView = (TextView) convertView.findViewById(R.id.tweetDate);
-
-        tweetBody.setText(tweet.getTweetMessage());
-        tweeterTextView.setText(tweet.tweeter.firstName + " " + tweet.tweeter.lastName);
-        try {
-            Date date = format.parse(tweet.date);
-            dateTextView.setText(readableFormat.format(date));
-        } catch (ParseException e) {
-        }
-
-        ImageView imageView = (ImageView) convertView.findViewById(R.id.imageView);
-
-        if (tweet.img != "") {
-            Picasso.with(getContext()).load(tweet.img).resize(500, 0).into(imageView);
-        }
-
-        return convertView;
     }
 }
