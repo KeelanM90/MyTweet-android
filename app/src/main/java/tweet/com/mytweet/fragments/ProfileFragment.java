@@ -69,9 +69,6 @@ public class ProfileFragment extends ListFragment implements AbsListView.MultiCh
                 parent, false);
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-
-
-
             @Override
             public void onRefresh() {
                 getTweets();
@@ -98,6 +95,25 @@ public class ProfileFragment extends ListFragment implements AbsListView.MultiCh
     }
 
     @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.action_clear);
+        item.setVisible(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_clear:
+                for (Tweet tweet : tweets) {
+                    deleteTweetHelper(tweet._id);
+                }
+                return true;
+                default:
+                    return true;
+        }
+    }
+
+    @Override
     public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
         return false;
     }
@@ -116,24 +132,26 @@ public class ProfileFragment extends ListFragment implements AbsListView.MultiCh
     private void deleteTweet(ActionMode actionMode) {
         for (int i = adapter.getCount() - 1; i >= 0; i--) {
             if (listView.isItemChecked(i)) {
-                Toast.makeText(app, adapter.getItem(i)._id, Toast.LENGTH_SHORT).show();
-                Call<String> call = (Call<String>) app.tweetService.deleteTweet(adapter.getItem(i)._id);
-
-                call.enqueue(new Callback<String>() {
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-                        Toast.makeText(getActivity(), "Could not delete tweet!", Toast.LENGTH_LONG).show();
-                    }
-                });
+                deleteTweetHelper(adapter.getItem(i)._id);
             }
         }
         actionMode.finish();
-        getTweets();
+    }
+
+    public void deleteTweetHelper(String _id) {
+        Call<String> call = (Call<String>) app.tweetService.deleteTweet(_id);
+
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                getTweets();
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Toast.makeText(getActivity(), "Could not delete tweet!", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
@@ -157,14 +175,18 @@ public class ProfileFragment extends ListFragment implements AbsListView.MultiCh
             tweets.add(tweet);
         }
 
-
         adapter.notifyDataSetChanged();
         app.tweetServiceAvailable = true;
+
+        if (swipeRefreshLayout.isRefreshing()) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     @Override
     public void onFailure(Call<List<Tweet>> call, Throwable t) {
         Toast.makeText(getActivity(), "Connection error, unable to retrieve tweets, returning to global timeline", Toast.LENGTH_SHORT).show();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new GlobalTimelineFragment(), "FragD").commit();
         app.tweetServiceAvailable = false;
     }
 }

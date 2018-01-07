@@ -53,9 +53,6 @@ public class TimelineActivity extends AppCompatActivity {
             case R.id.action_profile:
                 this.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new ProfileFragment(), "FragD").commit();
                 return true;
-            case R.id.action_clear:
-                this.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new ProfileFragment(), "FragD").commit();
-                return true;
             case R.id.action_settings:
                 startActivity(new Intent(this, Settings.class));
                 return true;

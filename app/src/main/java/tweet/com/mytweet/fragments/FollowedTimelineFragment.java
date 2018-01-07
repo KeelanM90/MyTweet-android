@@ -41,7 +41,7 @@ import tweet.com.mytweet.helpers.TimelineAdapter;
  * https://wit-ictskills-2017.github.io/mobile-app-dev/labwall.html
  */
 
-public class FollowedTimelineFragment extends ListFragment implements OnItemClickListener, Callback<List<Tweet>> {
+public class FollowedTimelineFragment extends ListFragment implements Callback<List<Tweet>> {
     private ArrayList<Tweet> tweets = new ArrayList<>();
     private Timeline timeline;
     private TimelineAdapter adapter;
@@ -77,19 +77,6 @@ public class FollowedTimelineFragment extends ListFragment implements OnItemClic
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        Tweet tweet = ((TimelineAdapter) getListAdapter()).getItem(position);
-        Intent i = new Intent(getActivity(), AddTweet.class);
-        startActivityForResult(i, 0);
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Tweet tweet = adapter.getItem(position);
-        IntentHelper.startActivityWithData(getActivity(), AddTweet.class, "TWEET_ID", tweet._id);
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         getTweets();
@@ -118,7 +105,8 @@ public class FollowedTimelineFragment extends ListFragment implements OnItemClic
 
     @Override
     public void onFailure(Call<List<Tweet>> call, Throwable t) {
-        Toast.makeText(getActivity(), "Connection error, unable to retrieve tweets", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Connection error, unable to retrieve tweets, returning to global timeline", Toast.LENGTH_SHORT).show();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new GlobalTimelineFragment(), "FragD").commit();
         app.tweetServiceAvailable = false;
     }
 }

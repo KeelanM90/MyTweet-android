@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Tweeter</string>
     <string name="tweet_button">Tweet</string>
-    <string name="tweet_hint">What\&#39;s on your mind?</string>
+    <string name="tweet_hint">What\&#39;s happening?</string>
     <string name="contact_button">Select Contact</string>
     <string name="email_button">Email Tweet Via</string>
     <string name="new_tweet">New Tweet</string>
@@ -25,7 +25,7 @@
     <string name="loginPassword">Password</string>
     <string name="loginSignIn">Apply</string>
     <string name="delete_tweet">Delete Tweet</string>
-    <string name="clear">Clear</string>
+    <string name="clear">Delete All</string>
     <string name="email_summary">Please enter your email</string>
     <string name="email">Email</string>
     <string name="password_summary">You may set your password here</string>
