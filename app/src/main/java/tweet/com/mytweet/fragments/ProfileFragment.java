@@ -1,6 +1,5 @@
 package tweet.com.mytweet.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,8 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -24,11 +21,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import tweet.com.mytweet.R;
-import tweet.com.mytweet.activities.AddTweet;
-import tweet.com.mytweet.activities.Settings;
 import tweet.com.mytweet.app.MyTweetApp;
-import tweet.com.mytweet.helpers.IntentHelper;
-import tweet.com.mytweet.models.Timeline;
 import tweet.com.mytweet.models.Tweet;
 import tweet.com.mytweet.models.User;
 import tweet.com.mytweet.helpers.TimelineAdapter;
@@ -43,7 +36,6 @@ import tweet.com.mytweet.helpers.TimelineAdapter;
 
 public class ProfileFragment extends ListFragment implements AbsListView.MultiChoiceModeListener, Callback<List<Tweet>> {
     private ArrayList<Tweet> tweets = new ArrayList<>();
-    private Timeline timeline;
     private TimelineAdapter adapter;
     private MyTweetApp app;
 

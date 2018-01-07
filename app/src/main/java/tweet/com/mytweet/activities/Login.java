@@ -1,11 +1,10 @@
 package tweet.com.mytweet.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import retrofit2.Call;
@@ -15,11 +14,8 @@ import tweet.com.mytweet.R;
 import tweet.com.mytweet.app.MyTweetApp;
 import tweet.com.mytweet.helpers.RetrofitServiceFactory;
 import tweet.com.mytweet.helpers.TweetService;
-import tweet.com.mytweet.models.Timeline;
 import tweet.com.mytweet.models.Token;
-import tweet.com.mytweet.models.TweetSerializer;
 import tweet.com.mytweet.models.User;
-import tweet.com.mytweet.models.UserStore;
 
 public class Login extends AppCompatActivity implements Callback<Token> {
 
@@ -60,7 +56,6 @@ public class Login extends AppCompatActivity implements Callback<Token> {
         if(auth != null && auth.success != false) {
             app.currentUser = auth.user;
             app.tweetService = RetrofitServiceFactory.createService(TweetService.class, auth.token);
-      //      app.serviceAvailableMessage();
             startActivity(new Intent(this, TimelineActivity.class));
         }
     }

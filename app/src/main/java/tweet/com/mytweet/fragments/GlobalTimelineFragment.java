@@ -1,16 +1,11 @@
 package tweet.com.mytweet.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -26,7 +21,6 @@ import tweet.com.mytweet.models.Tweet;
 import tweet.com.mytweet.models.User;
 import tweet.com.mytweet.helpers.TimelineAdapter;
 
-
 /**
  * Created by keela on 02/11/2017.
  * <p>
@@ -39,7 +33,6 @@ public class GlobalTimelineFragment extends ListFragment implements Callback<Lis
     private Timeline timeline;
     private TimelineAdapter adapter;
     private MyTweetApp app;
-    private ListView listView;
 
     protected SwipeRefreshLayout swipeRefreshLayout;
 
