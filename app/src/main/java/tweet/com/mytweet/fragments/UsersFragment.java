@@ -1,13 +1,12 @@
 package tweet.com.mytweet.fragments;
 
-import android.support.v4.app.ListFragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -51,10 +50,8 @@ public class UsersFragment extends ListFragment implements OnItemClickListener, 
         userStore = app.userStore;
         users = userStore.users;
 
-        for (User user : users) {
 
-        }
-
+        //adapter = new UserlistAdapter(getActivity(), updateIsFollowing(users));
         adapter = new UserlistAdapter(getActivity(), users);
         setListAdapter(adapter);
     }
@@ -121,6 +118,36 @@ public class UsersFragment extends ListFragment implements OnItemClickListener, 
         }
     }
 
+    ArrayList<User> updateIsFollowing(ArrayList<User> users) {
+        ArrayList<User> adaptedArray = new ArrayList<User>();
+        final ArrayList<User> following = new ArrayList<User>();
+        Call<List<User>> call = (Call<List<User>>) app.tweetService.getFollowing(app.currentUser._id);
+
+        call.enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                for (User user : response.body()) {
+                    following.add(user);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+                Toast.makeText(getContext(), "Could not get followers" + t.toString(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        for (User user : users) {
+            user.isFollowed = false;
+            for (User follow : following){
+                if (true) {
+                    user.isFollowed = true;
+                }
+            }
+            adaptedArray.add(user);
+        }
+        return adaptedArray;
+    }
 }
 
 class UserlistAdapter extends ArrayAdapter<User> {
@@ -156,7 +183,21 @@ class UserlistAdapter extends ArrayAdapter<User> {
             @Override
             public void onClick(View v) {
                 if (user.isFollowed) {
+                    Call<Relationship> call = (Call<Relationship>) app.tweetService.unfollow(user._id);
 
+                    call.enqueue(new Callback<Relationship>() {
+                        @Override
+                        public void onResponse(Call<Relationship> call, Response<Relationship> response) {
+                            holder.followButton.setBackgroundResource(R.drawable.button_background);
+                            holder.followButton.setText("Follow");
+                            user.isFollowed = false;
+                        }
+
+                        @Override
+                        public void onFailure(Call<Relationship> call, Throwable t) {
+                            Toast.makeText(context, "Could not follow", Toast.LENGTH_LONG).show();
+                        }
+                    });
                 } else {
                     Relationship relationship = new Relationship();
                     relationship.followee = user._id;
@@ -167,6 +208,7 @@ class UserlistAdapter extends ArrayAdapter<User> {
                         public void onResponse(Call<Relationship> call, Response<Relationship> response) {
                             holder.followButton.setBackgroundResource(R.drawable.unfollow_background);
                             holder.followButton.setText("Unfollow");
+                            user.isFollowed = true;
                         }
 
                         @Override

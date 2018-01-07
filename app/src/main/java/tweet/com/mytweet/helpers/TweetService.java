@@ -41,4 +41,11 @@ public interface TweetService
 
     @POST("/api/follow")
     Call<Relationship> follow(@Body Relationship relationship);
+
+    @DELETE("/api/follow/{id}")
+    Call<Relationship> unfollow(@Path("id") String id);
+
+
+    @GET("/api/users/{id}")
+    Call<List<User>> getFollowing(@Path("id") String id);
 }
