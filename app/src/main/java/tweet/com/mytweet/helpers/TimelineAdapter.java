@@ -32,25 +32,46 @@ public class TimelineAdapter extends ArrayAdapter<Tweet> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        final ViewHolder holder;
+
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.tweet_view, null);
+            holder = new ViewHolder();
+
+            holder.tweetBody = (TextView) convertView.findViewById(R.id.tweetBody);
+            holder.tweeterTextView = (TextView) convertView.findViewById(R.id.tweeter);
+            holder.dateTextView = (TextView) convertView.findViewById(R.id.tweetDate);
+            holder.imageView = (ImageView) convertView.findViewById(R.id.imageView);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
+
+
+        Picasso.with(getContext()).cancelRequest(holder.imageView);
         Tweet tweet = getItem(position);
 
-        TextView tweetBody = (TextView) convertView.findViewById(R.id.tweetBody);
-        TextView tweeterTextView = (TextView) convertView.findViewById(R.id.tweeter);
-        TextView dateTextView = (TextView) convertView.findViewById(R.id.tweetDate);
-
-        tweetBody.setText(tweet.getTweetMessage());
-        tweeterTextView.setText(tweet.tweeterName);
-        dateTextView.setText(tweet.getDateString());
-
-        ImageView imageView = (ImageView) convertView.findViewById(R.id.imageView);
+        holder.tweetBody.setText(tweet.getTweetMessage());
+        holder.tweeterTextView.setText(tweet.tweeterName);
+        holder.dateTextView.setText(tweet.getDateString());
 
         if (!tweet.img.equals("")) {
-            Picasso.with(getContext()).load(tweet.img).resize(500, 0).into(imageView);
+            Picasso.with(getContext()).load(tweet.img).resize(500, 0).into(holder.imageView);
+        } else {
+            Picasso.with(getContext()).load((String) null).into(holder.imageView);
         }
+
         return convertView;
     }
+
+    static class ViewHolder {
+        public TextView tweetBody;
+        public TextView tweeterTextView;
+        public TextView dateTextView;
+        public ImageView imageView;
+    }
+
 }
+

@@ -1,8 +1,5 @@
 package tweet.com.mytweet.models;
 
-import android.util.Log;
-import android.widget.Toast;
-
 import java.util.ArrayList;
 
 /**
@@ -24,7 +21,6 @@ public class Timeline {
             tweets = tweetSerializer.loadTweets();
         }
         catch (Exception e) {
-            Log.e("this is error", e.toString());
             tweets = new ArrayList<>();
         }
     }
@@ -60,7 +56,6 @@ public class Timeline {
             tweets = tweetSerializer.loadTweets();
         }
         catch (Exception e) {
-            Log.e("this is error", e.toString());
             tweets = new ArrayList<>();
         }
     }

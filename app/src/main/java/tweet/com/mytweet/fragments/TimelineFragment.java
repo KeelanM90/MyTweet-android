@@ -75,7 +75,7 @@ public class TimelineFragment extends ListFragment implements OnItemClickListene
     public void onListItemClick(ListView l, View v, int position, long id) {
         Tweet tweet = ((TimelineAdapter) getListAdapter()).getItem(position);
         Intent i = new Intent(getActivity(), TweetActivity.class);
-        i.putExtra(TweetFragment.EXTRA_TWEET_ID, tweet._id);
+        //i.putExtra(TweetFragment.EXTRA_TWEET_ID, tweet._id);
         startActivityForResult(i, 0);
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
         listView.setMultiChoiceModeListener(this);

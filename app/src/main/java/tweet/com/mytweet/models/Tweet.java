@@ -5,6 +5,7 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,6 +22,7 @@ public class Tweet {
     public String _id;
     public String date;
     public String img;
+    public File image;
     private String tweet;
     public String tweeterName;
     public User tweeter;
@@ -32,7 +34,9 @@ public class Tweet {
     private static final String JSON_TWEETER_NAME = "userid";
 
     public Tweet() {
-        date = new Date().toString();
+        this.date = "";
+        this.tweet = "";
+        this.image = null;
     }
 
     public Tweet(JSONObject json) throws JSONException {

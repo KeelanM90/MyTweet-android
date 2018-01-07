@@ -4,7 +4,6 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -22,6 +21,9 @@ public interface TweetService
 
     @PUT("/api/users")
     Call<User> updateUser(@Body User user);
+
+    @POST("/api/tweets")
+    Call<Tweet> addTweet(@Body Tweet tweet);
 
     @GET("/api/tweets")
     Call<List<Tweet>> getTweets();
