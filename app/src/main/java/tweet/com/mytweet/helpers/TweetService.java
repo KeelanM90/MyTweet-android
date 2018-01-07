@@ -28,6 +28,9 @@ public interface TweetService
     @GET("/api/tweets")
     Call<List<Tweet>> getTweets();
 
+    @GET("/api/users/{id}/tweets")
+    Call<List<Tweet>> getUsersTweets(@Path("id") String id);
+
     @GET("/api/tweets/followed")
     Call<List<Tweet>> getFollowedTweets();
 }

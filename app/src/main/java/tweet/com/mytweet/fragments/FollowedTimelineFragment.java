@@ -4,12 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -20,7 +24,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import tweet.com.mytweet.R;
+import tweet.com.mytweet.activities.AddTweet;
+import tweet.com.mytweet.activities.Settings;
 import tweet.com.mytweet.app.MyTweetApp;
+import tweet.com.mytweet.helpers.IntentHelper;
 import tweet.com.mytweet.models.Timeline;
 import tweet.com.mytweet.models.Tweet;
 import tweet.com.mytweet.models.User;
@@ -29,17 +36,16 @@ import tweet.com.mytweet.helpers.TimelineAdapter;
 
 /**
  * Created by keela on 02/11/2017.
- * <p>
+ *
  * reference: All aspects of this app are heavily based around the below tutorials
  * https://wit-ictskills-2017.github.io/mobile-app-dev/labwall.html
  */
 
-public class GlobalTimelineFragment extends ListFragment implements Callback<List<Tweet>> {
-    private ArrayList<Tweet> tweets;
+public class FollowedTimelineFragment extends ListFragment implements OnItemClickListener, Callback<List<Tweet>> {
+    private ArrayList<Tweet> tweets = new ArrayList<>();
     private Timeline timeline;
     private TimelineAdapter adapter;
     private MyTweetApp app;
-    private ListView listView;
 
     protected SwipeRefreshLayout swipeRefreshLayout;
 
@@ -51,13 +57,10 @@ public class GlobalTimelineFragment extends ListFragment implements Callback<Lis
         getActivity().setTitle(R.string.app_name);
 
         app = MyTweetApp.getApp();
-        timeline = app.timeline;
-        tweets = timeline.tweets;
 
         adapter = new TimelineAdapter(getActivity(), tweets);
         setListAdapter(adapter);
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -70,8 +73,20 @@ public class GlobalTimelineFragment extends ListFragment implements Callback<Lis
                 getTweets();
             }
         });
-
         return rootView;
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        Tweet tweet = ((TimelineAdapter) getListAdapter()).getItem(position);
+        Intent i = new Intent(getActivity(), AddTweet.class);
+        startActivityForResult(i, 0);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Tweet tweet = adapter.getItem(position);
+        IntentHelper.startActivityWithData(getActivity(), AddTweet.class, "TWEET_ID", tweet._id);
     }
 
     @Override
@@ -80,8 +95,8 @@ public class GlobalTimelineFragment extends ListFragment implements Callback<Lis
         getTweets();
     }
 
-    public void getTweets() {
-        Call<List<Tweet>> call = (Call<List<Tweet>>) app.tweetService.getTweets();
+    public void getTweets(){
+        Call<List<Tweet>> call = (Call<List<Tweet>>) app.tweetService.getFollowedTweets();
         call.enqueue(this);
     }
 
@@ -93,9 +108,6 @@ public class GlobalTimelineFragment extends ListFragment implements Callback<Lis
             tweets.add(tweet);
         }
 
-        timeline.setTweets(tweets);
-        timeline.refresh();
-
         adapter.notifyDataSetChanged();
         app.tweetServiceAvailable = true;
 
@@ -106,11 +118,7 @@ public class GlobalTimelineFragment extends ListFragment implements Callback<Lis
 
     @Override
     public void onFailure(Call<List<Tweet>> call, Throwable t) {
-        Toast toast = Toast.makeText(getActivity(), "Connection error, showing saved tweets", Toast.LENGTH_SHORT);
-        toast.show();
+        Toast.makeText(getActivity(), "Connection error, unable to retrieve tweets", Toast.LENGTH_SHORT).show();
         app.tweetServiceAvailable = false;
-        if (swipeRefreshLayout.isRefreshing()) {
-            swipeRefreshLayout.setRefreshing(false);
-        }
     }
 }

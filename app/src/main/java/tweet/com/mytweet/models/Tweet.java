@@ -36,6 +36,7 @@ public class Tweet {
     public Tweet() {
         this.date = "";
         this.tweet = "";
+        this.img = "";
         this.image = null;
     }
 

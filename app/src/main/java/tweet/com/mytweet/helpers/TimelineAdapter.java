@@ -49,7 +49,6 @@ public class TimelineAdapter extends ArrayAdapter<Tweet> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-
         Picasso.with(getContext()).cancelRequest(holder.imageView);
         Tweet tweet = getItem(position);
 

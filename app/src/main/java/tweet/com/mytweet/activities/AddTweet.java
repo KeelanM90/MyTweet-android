@@ -36,7 +36,7 @@ import tweet.com.mytweet.app.MyTweetApp;
 import tweet.com.mytweet.models.Timeline;
 import tweet.com.mytweet.models.Tweet;
 
-public class TweetActivity extends Activity implements TextWatcher, View.OnClickListener, Callback<Tweet> {
+public class AddTweet extends Activity implements TextWatcher, View.OnClickListener, Callback<Tweet> {
 
     MyTweetApp app;
 
@@ -147,6 +147,7 @@ public class TweetActivity extends Activity implements TextWatcher, View.OnClick
             bmp.compress(Bitmap.CompressFormat.PNG, 40, stream);
 
             img = "data:image/png;base64," + Base64.encodeToString(stream.toByteArray(), Base64.DEFAULT);
+            tweetCameraButton.setText("Image Added");
         } else {
             Toast.makeText(this, "Image Capture Failed", Toast.LENGTH_SHORT).show();
         }

@@ -1,6 +1,7 @@
 /*
 package tweet.com.mytweet.fragments;
 
+
 */
 /**
  * Created by keela on 02/11/2017.
@@ -8,6 +9,7 @@ package tweet.com.mytweet.fragments;
  * reference: All aspects of this app are heavily based around the below tutorials with parts of the original code remaining
  * https://wit-ictskills-2017.github.io/mobile-app-dev/labwall.html
  *//*
+
 
 
 import android.Manifest;
@@ -26,7 +28,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import tweet.com.mytweet.R;
-import tweet.com.mytweet.activities.TweetActivity;
+import tweet.com.mytweet.activities.AddTweet;
 import tweet.com.mytweet.app.MyTweetApp;
 import tweet.com.mytweet.models.Timeline;
 import tweet.com.mytweet.models.Tweet;
@@ -73,7 +75,7 @@ public class ViewTweetFragment extends Fragment implements View.OnClickListener 
         super.onCreateView(inflater, parent, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_view_tweet, parent, false);
 
-        TweetActivity tweetActivity = (TweetActivity) getActivity();
+        AddTweet tweetActivity = (AddTweet) getActivity();
         tweetActivity.actionBar.setDisplayHomeAsUpEnabled(true);
 
         addListeners(v);
@@ -173,4 +175,5 @@ public class ViewTweetFragment extends Fragment implements View.OnClickListener 
         }
     }
 }
+
 */
