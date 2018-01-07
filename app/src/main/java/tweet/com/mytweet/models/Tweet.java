@@ -22,7 +22,7 @@ public class Tweet {
     public String _id;
     public String date;
     public String img;
-    public File image;
+    public String image;
     private String tweet;
     public String tweeterName;
     public User tweeter;
