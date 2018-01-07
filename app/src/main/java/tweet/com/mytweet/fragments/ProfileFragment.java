@@ -180,5 +180,10 @@ public class ProfileFragment extends ListFragment implements AbsListView.MultiCh
         Toast.makeText(getActivity(), "Connection error, unable to retrieve tweets, returning to global timeline", Toast.LENGTH_SHORT).show();
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new GlobalTimelineFragment(), "FragD").commit();
         app.tweetServiceAvailable = false;
+
+        if (swipeRefreshLayout.isRefreshing()) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
+        adapter.notifyDataSetInvalidated();
     }
 }
