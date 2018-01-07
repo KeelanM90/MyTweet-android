@@ -18,6 +18,7 @@ public class User {
     public String lastName;
     public String email;
     public String password;
+    public boolean isFollowed = false;
 
     private static final String JSON_ID = "_id";
     private static final String JSON_FIRST_NAME = "firstname";

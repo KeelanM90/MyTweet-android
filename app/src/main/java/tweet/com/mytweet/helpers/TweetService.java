@@ -9,6 +9,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import tweet.com.mytweet.models.Relationship;
 import tweet.com.mytweet.models.Tweet;
 import tweet.com.mytweet.models.User;
 
@@ -37,4 +38,7 @@ public interface TweetService
 
     @DELETE("/api/tweets/{id}")
     Call<String> deleteTweet(@Path("id") String id);
+
+    @POST("/api/follow")
+    Call<Relationship> follow(@Body Relationship relationship);
 }
