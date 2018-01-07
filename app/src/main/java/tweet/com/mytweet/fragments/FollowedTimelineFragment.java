@@ -17,7 +17,6 @@ import retrofit2.Response;
 import tweet.com.mytweet.R;
 import tweet.com.mytweet.app.MyTweetApp;
 import tweet.com.mytweet.helpers.TimelineAdapter;
-import tweet.com.mytweet.models.Timeline;
 import tweet.com.mytweet.models.Tweet;
 import tweet.com.mytweet.models.User;
 

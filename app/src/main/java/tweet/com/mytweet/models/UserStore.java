@@ -34,7 +34,7 @@ public class UserStore {
         Log.i(this.getClass().getSimpleName(), "Long parameter id: " + id);
 
         for (User user : users) {
-            if (id.equals(user.id)) {
+            if (id.equals(user._id)) {
                 return user;
             }
         }
@@ -58,6 +58,21 @@ public class UserStore {
             return true;
         } catch (Exception e) {
             return false;
+        }
+    }
+
+    public  void setUsers(ArrayList<User> newUsers) {
+        this.users = new ArrayList<>(newUsers);
+        saveUsers();
+    }
+
+    public void refresh() {
+        try
+        {
+            users = userSerializer.loadUsers();
+        }
+        catch (Exception e) {
+            users = new ArrayList<>();
         }
     }
 }

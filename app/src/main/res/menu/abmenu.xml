@@ -35,6 +35,12 @@
         app:showAsAction="never"/>
 
     <item
+        android:id="@+id/action_users"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="@string/users"
+        app:showAsAction="never"/>
+
+    <item
         android:id="@+id/action_settings"
         android:icon="@android:drawable/ic_menu_preferences"
         android:title="@string/settings"

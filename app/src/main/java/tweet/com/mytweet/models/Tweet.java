@@ -62,20 +62,6 @@ public class Tweet {
         return json;
     }
 
-    /**
-     * Src: Android labs - https://wit-ictskills-2017.github.io/mobile-app-dev/topic03-a/book-c-myrent-01%20(Widgets)/index.html#/05
-     * Generate a long greater than zero
-     *
-     * @return Unsigned Long value greater than zero
-     */
-    private Long unsignedLong() {
-        long rndVal = 0;
-        do {
-            rndVal = new Random().nextLong();
-        } while (rndVal <= 0);
-        return rndVal;
-    }
-
     public void setTweetMessage(String tweetMessage) {
         this.tweet = tweetMessage;
     }
@@ -88,10 +74,6 @@ public class Tweet {
         return dateString();
     }
 
-    public String getUserId() {
-        return this.tweeter._id;
-    }
-
     private String dateString() {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         SimpleDateFormat readableFormat = new SimpleDateFormat("MMM d, yyyy hh:mm a");
@@ -102,10 +84,5 @@ public class Tweet {
         } catch (ParseException e) {
         }
         return readableDate;
-    }
-
-    public String getEmailableTweet() {
-        String tweetString = "Tweet: " + tweet + " Date: " + dateString();
-        return tweetString;
     }
 }

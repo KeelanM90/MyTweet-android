@@ -56,7 +56,7 @@ public class Login extends AppCompatActivity implements Callback<Token> {
         if(auth != null && auth.success != false) {
             app.currentUser = auth.user;
             app.tweetService = RetrofitServiceFactory.createService(TweetService.class, auth.token);
-            startActivity(new Intent(this, TimelineActivity.class));
+            startActivity(new Intent(this, ContainerActivity.class));
         }
     }
 

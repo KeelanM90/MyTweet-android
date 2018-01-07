@@ -54,6 +54,9 @@ public class MyTweetApp extends Application implements Callback<Token> {
         TweetSerializer tweetSerializer = new TweetSerializer(this, TWEETS_FILENAME);
         timeline = new Timeline(tweetSerializer);
 
+        UserSerializer userSerializer = new UserSerializer(this, USERS_FILENAME);
+        userStore = new UserStore(userSerializer);
+
         tweetServiceOpen = RetrofitServiceFactory.createService(TweetServiceOpen.class);
 
         Log.v("Tweet", "Tweet App Started");

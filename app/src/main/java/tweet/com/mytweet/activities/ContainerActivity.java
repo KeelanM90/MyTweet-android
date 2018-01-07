@@ -13,12 +13,13 @@ import tweet.com.mytweet.R;
 import tweet.com.mytweet.fragments.FollowedTimelineFragment;
 import tweet.com.mytweet.fragments.GlobalTimelineFragment;
 import tweet.com.mytweet.fragments.ProfileFragment;
+import tweet.com.mytweet.fragments.UsersFragment;
 
 /**
  * Created by keela on 01/11/2017.
  */
 
-public class TimelineActivity extends AppCompatActivity {
+public class ContainerActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +34,6 @@ public class TimelineActivity extends AppCompatActivity {
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.abmenu, menu);
         return true;
@@ -52,6 +52,9 @@ public class TimelineActivity extends AppCompatActivity {
                 return true;
             case R.id.action_profile:
                 this.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new ProfileFragment(), "FragD").commit();
+                return true;
+            case R.id.action_users:
+                this.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new UsersFragment(), "FragD").commit();
                 return true;
             case R.id.action_settings:
                 startActivity(new Intent(this, Settings.class));

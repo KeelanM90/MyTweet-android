@@ -14,13 +14,12 @@ import java.util.Random;
 
 public class User {
     public String _id;
-    public Long id;
     public String firstName;
     public String lastName;
     public String email;
     public String password;
 
-    private static final String JSON_ID = "id";
+    private static final String JSON_ID = "_id";
     private static final String JSON_FIRST_NAME = "firstname";
     private static final String JSON_LAST_NAME = "lastname";
     private static final String JSON_EMAIL = "email";
@@ -46,17 +45,9 @@ public class User {
         this.email = user.email;
         this.password = user.password;
     }
-    /**
-    public User(String firstName, String lastName, String email, String password) {
-        id = unsignedLong();
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-    }
-  */
+
     public User(JSONObject json) throws JSONException {
-        id = json.getLong(JSON_ID);
+        _id = json.getString(JSON_ID);
         firstName = json.getString(JSON_FIRST_NAME);
         lastName = json.getString(JSON_LAST_NAME);
         email = json.getString(JSON_EMAIL);
@@ -65,27 +56,11 @@ public class User {
 
     public JSONObject toJSON() throws JSONException {
         JSONObject json = new JSONObject();
-        json.put(JSON_ID, Long.toString(id));
+        json.put(JSON_ID, _id);
         json.put(JSON_FIRST_NAME, firstName);
         json.put(JSON_LAST_NAME, lastName);
         json.put(JSON_EMAIL, email);
         json.put(JSON_PASSWORD, password);
         return json;
-    }
-
-
-
-    /**
-     * Src: Android labs - https://wit-ictskills-2017.github.io/mobile-app-dev/topic03-a/book-c-myrent-01%20(Widgets)/index.html#/05
-     * Generate a long greater than zero
-     *
-     * @return Unsigned Long value greater than zero
-     */
-    private Long unsignedLong() {
-        long rndVal = 0;
-        do {
-            rndVal = new Random().nextLong();
-        } while (rndVal <= 0);
-        return rndVal;
     }
 }
