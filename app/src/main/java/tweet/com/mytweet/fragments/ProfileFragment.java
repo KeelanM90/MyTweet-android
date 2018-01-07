@@ -117,11 +117,23 @@ public class ProfileFragment extends ListFragment implements AbsListView.MultiCh
         for (int i = adapter.getCount() - 1; i >= 0; i--) {
             if (listView.isItemChecked(i)) {
                 Toast.makeText(app, adapter.getItem(i)._id, Toast.LENGTH_SHORT).show();
-                //timeline.deleteTweet(adapter.getItem(i));
+                Call<String> call = (Call<String>) app.tweetService.deleteTweet(adapter.getItem(i)._id);
+
+                call.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        Toast.makeText(getActivity(), "Could not delete tweet!", Toast.LENGTH_LONG).show();
+                    }
+                });
             }
         }
         actionMode.finish();
-        adapter.notifyDataSetChanged();
+        getTweets();
     }
 
     @Override
@@ -152,7 +164,7 @@ public class ProfileFragment extends ListFragment implements AbsListView.MultiCh
 
     @Override
     public void onFailure(Call<List<Tweet>> call, Throwable t) {
-        Toast.makeText(getActivity(), "Connection error, unable to retrieve tweets", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Connection error, unable to retrieve tweets, returning to global timeline", Toast.LENGTH_SHORT).show();
         app.tweetServiceAvailable = false;
     }
 }
